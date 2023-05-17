@@ -1,12 +1,12 @@
 <template>
   <div>
-    MovieListItem
+    TogetherCommunityListItem
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MovieListItem'
+  name: 'TogetherCommunityListItem'
 }
 </script>
 
