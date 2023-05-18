@@ -31,6 +31,31 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'movies',
+    'accounts',
+    'community',
+
+    'rest_framework',
+    'django_extensions',
+
+    #CORS 세팅
+    'corsheaders',
+
+    # Auth
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+
+
+    # registration
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
+
+    # OpenAPI 3.0
+    # 'drf_spectacular',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +64,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+REST_AUTH = { # 회원가입시 토큰 발급
+    'SESSION_LOGIN': False,
+}
+
+# 하나의 컨텐츠로 여러 개의 도메인에 등록하고 싶을 때 사용
+SITE_ID = 1
+
 MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -123,3 +158,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.User'
