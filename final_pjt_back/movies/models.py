@@ -25,9 +25,9 @@ class Movie(models.Model):
     runtime = models.IntegerField()
 
     # many to many fields => 머 여러개 있으니까,,
-    actors = models.ManyToManyField(Actor)
-    genres = models.ManyToManyField(Genre)
-    directors = models.ManyToManyField(Director)
+    actors = models.ManyToManyField(Actor, related_name="movies")
+    genres = models.ManyToManyField(Genre, related_name="movies")
+    directors = models.ManyToManyField(Director, related_name="movies")
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
 class MovieActors(models.Model):
@@ -40,9 +40,13 @@ class MovieDirectors(models.Model):
     director = models.ForeignKey(Director, on_delete=models.CASCADE)
 
 class MovieReview(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     score = models.FloatField()
 
+class ReviewLike(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
+    movie_review = models.ForeignKey(MovieReview, on_delete=models.CASCADE)
