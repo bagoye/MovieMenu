@@ -39,15 +39,12 @@ export default {
   },
   created() {
     axios({
-      url: `https://api.themoviedb.org/3/movie/top_rated/`,
-      params: {
-        api_key: "779716af9004289d5cc205ea82476fab",
-        language: "ko-KR",
-      },
+      method: 'get',
+      url: `http://127.0.0.1:8000/movies/allmovie/`,
     })
     .then(res => {
       console.log(res)
-      this.movies = res.data.results
+      this.movies = res.data
     })
     .catch(err => {
       console.log(err)
@@ -59,6 +56,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style>

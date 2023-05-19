@@ -12,6 +12,7 @@
 
 <script>
 import NormalMovieList from '@/components/NormalMovieList'
+
 export default {
   name: 'NormalMovieView',
   components: {
@@ -19,7 +20,7 @@ export default {
   },
   data() {
     return {
-      keywords: ['popular', 'upcoming', 'top_rated']
+      keywords: ['popular', 'voteaverage', 'adventure', 'action' ,'sf']
     }
   },
 }

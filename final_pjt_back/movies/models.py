@@ -20,7 +20,7 @@ class Movie(models.Model):
     vote_count = models.IntegerField()
     vote_average = models.FloatField()
     overview = models.TextField()
-    poster_path = models.CharField(max_length=200)
+    poster_path = models.CharField(max_length=200, blank=True)
     youtube_key = models.CharField(max_length=100)
     runtime = models.IntegerField()
 
@@ -29,6 +29,8 @@ class Movie(models.Model):
     genres = models.ManyToManyField(Genre, related_name="movies")
     directors = models.ManyToManyField(Director, related_name="movies")
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL)
+
+
 
 class MovieActors(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)

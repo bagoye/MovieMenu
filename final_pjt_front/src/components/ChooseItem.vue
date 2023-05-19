@@ -1,12 +1,17 @@
 <template>
   <div>
-    ChooseMovieListItem
+    ChooseItem
+    {{ genre }}
+
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ChooseMovieListItem'
+  name: 'ChooseItem',
+  props: {
+    genre: Number
+  }
 }
 </script>
 

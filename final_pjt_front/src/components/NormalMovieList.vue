@@ -1,8 +1,10 @@
 <template>
   <div>
     <span class="movieKeyword" v-if="keyword === 'popular'">인기순</span>
-    <span class="movieKeyword" v-else-if="keyword === 'upcoming'">개봉 예정작</span>
-    <span class="movieKeyword" v-else>높은 평점순</span>
+    <span class="movieKeyword" v-else-if="keyword === 'voteaverage'">평점 높은 순</span>
+    <span class="movieKeyword" v-else-if="keyword === 'adventure'">모험</span>
+    <span class="movieKeyword" v-else-if="keyword === 'action'">액션</span>
+    <span class="movieKeyword" v-else-if="keyword === 'sf'">sf</span>
     <NormalMovieListItem
       v-for="(movie, index) in movies" :key="`movie-${index}`"
       :movie="movie"
@@ -31,15 +33,12 @@ export default {
   },
   created() {
     axios({
-      url: `https://api.themoviedb.org/3/movie/${this.keyword}/`,
-      params: {
-        api_key: "779716af9004289d5cc205ea82476fab",
-        language: "ko-KR",
-      },
+      method: 'get',
+      url: `http://127.0.0.1:8000/movies/${this.keyword}/`,
     })
     .then(res => {
       console.log(res)
-      this.movies = res.data.results
+      this.movies = res.data
     })
     .catch(err => {
       console.log(err)

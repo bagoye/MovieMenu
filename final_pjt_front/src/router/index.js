@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/Movies/HomeView'
 import ChooseView from '../views/Movies/ChooseView'
+import AloneMovieView from '../views/Movies/AloneMovieView'
+import LoverMovieView from '../views/Movies/LoverMovieView'
 import NormalMovieView from '../views/Movies/NormalMovieView'
 import RandomMovieView from '../views/Movies/RandomMovieView'
 import CommunityView from '../views/CommunityView'
@@ -19,6 +21,16 @@ const routes = [
     path: '/choose',
     name: 'ChooseView',
     component: ChooseView
+  },
+  {
+    path: '/choosealone',
+    name: 'AloneMovieView',
+    component: AloneMovieView
+  },
+  {
+    path: '/chooselover',
+    name: 'LoverMovieView',
+    component: LoverMovieView
   },
   {
     path: '/normal',

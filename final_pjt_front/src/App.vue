@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <nav>
-      <img src="#" alt="logo">
+      <img src="./assets/dayoungsuyeom.png" alt="logo" @click="toHome">
 
       <div>
-        <router-link to='/'>HOME</router-link> |
+        <router-link :to="{name: 'HomeView'}">HOME</router-link> |
         <router-link :to="{name: 'RandomMovieView'}">오늘의 추천</router-link> |
         <router-link :to="{name: 'CommunityView'}">커뮤니티</router-link> |
         <router-link :to="{name: 'AccountView'}">Login</router-link>
@@ -18,6 +18,17 @@
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'app',
+  methods: {
+    toHome() {
+      this.$router.push({name: 'HomeView'}).catch(() => {})
+    }
+  }
+}
+</script>
 
 <style>
 

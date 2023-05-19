@@ -2,17 +2,16 @@
   <div>
     <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`" alt="...">
     {{ movie.title }}
-    
-
   </div>
 </template>
 
 <script>
 export default {
-  name: 'NormalMovieListItem',
+  name: 'ChooseMovieItem',
   props: {
-    movie: Object,
-  }
+    movie: Object
+  },
+
 }
 </script>
 

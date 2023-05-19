@@ -1,16 +1,77 @@
-# from django.shortcuts import render
-# from django.http import JsonResponse, HttpResponse
-# from .models import Genre, Movie, Actor, Director, MovieActors, MovieDirectors
-# import requests
+from django.shortcuts import render
+from django.http import JsonResponse, HttpResponse
+from .models import Movie, Genre
 
-# # TMDB API KEY 작성
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+from .models import Movie
+from .serializers.movie import MovieListSerializer
+
+
+@api_view(['GET', ])
+def popular(request):
+    movie_data = Movie.objects.all().order_by('-popularity')[:50]
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', ])
+def vote_average(request):
+    movie_data = Movie.objects.all().order_by('-vote_average')[:50]
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', ])
+def adventure(request):
+    movie_data = Movie.objects.filter(genres__pk=12)[:50]
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', ])
+def action(request):
+    movie_data = Movie.objects.filter(genres__pk=28)[:50]
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', ])
+def sf(request):
+    movie_data = Movie.objects.filter(genres__pk=878)[:50]
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', ])
+def allmovie(request):
+    movie_data = Movie.objects.all()[:50]
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', ])
+def alonemovie(request):
+    genre_pks = [18, 9648, 14, 35]
+    movie_data = Movie.objects.filter(genres__pk__in=genre_pks)
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', ])
+def lovermovie(request):
+    genre_pks = [10749, 10402, 35, 27]
+    movie_data = Movie.objects.filter(genres__pk__in=genre_pks)[:180]
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+
+
+
+# ------------------- json 데이터 가져오기---------------------------
+
+# TMDB API KEY 작성
 # API_KEY = '779716af9004289d5cc205ea82476fab'
+
 
 # GENRE_URL = 'https://api.themoviedb.org/3/genre/movie/list'
 # POPULAR_MOVIE_URL = 'https://api.themoviedb.org/3/movie/popular'
-# # DETAIL_MOVIE_URL = f'https://api.themoviedb.org/3/movie/{movie_id}'
-# # CREDITS_CRUE_URL = f'https://api.themoviedb.org/3/movie/{movie_id}/credits'
-
+# UPCOMING_MOVIE_URL = 'https://api.themoviedb.org/3/movie/upcoming'
+# TOP_RATED_MOVIE_URL = 'https://api.themoviedb.org/3/movie/top_rated'
 
 # def get_directors(movie):
 #     movie_id = movie.id
@@ -102,7 +163,7 @@
 #         if movie.actors.count() == 5:
 #             break
 
-# def movie_data(page=1):
+# def popular_movie_data(page=1):
 #     response = requests.get(
 #         POPULAR_MOVIE_URL,
 #         params={
@@ -138,7 +199,80 @@
 #         get_directors(movie)
 #         print('>>>', movie.title, '==>', movie.youtube_key)
 
-# def tmdb_data(request):
+
+# def upcoming_movie_data(page=1):
+#     response = requests.get(
+#         UPCOMING_MOVIE_URL,
+#         params={
+#             'api_key': API_KEY,
+#             'language': 'ko-kr',     
+#             'page': page,       
+#         }
+#     ).json()
+
+#     for movie_dict in response.get('results'):
+#         if not movie_dict.get('release_date'): continue   # 없는 필드 skip
+#         # 유투브 key 조회
+#         youtube_key = get_youtube_key(movie_dict)
+#         runtime = get_runtime(movie_dict)
+
+#         movie = Movie.objects.create(
+#             id=movie_dict.get('id'),
+#             title=movie_dict.get('title'),
+#             release_date=movie_dict.get('release_date'),
+#             popularity=movie_dict.get('popularity'),
+#             vote_count=movie_dict.get('vote_count'),
+#             vote_average=movie_dict.get('vote_average'),
+#             overview=movie_dict.get('overview'),
+#             poster_path=movie_dict.get('poster_path'),   
+#             youtube_key=youtube_key,
+#             runtime=runtime,
+#         )
+#         for genre_id in movie_dict.get('genre_ids', []):
+#             movie.genres.add(genre_id)
+
+#         # 배우들 저장
+#         get_actors(movie)
+#         get_directors(movie)
+#         print('>>>', movie.title, '==>', movie.youtube_key)
+
+# def top_rated_movie_data(page=1):
+#     response = requests.get(
+#         TOP_RATED_MOVIE_URL,
+#         params={
+#             'api_key': API_KEY,
+#             'language': 'ko-kr',     
+#             'page': page,       
+#         }
+#     ).json()
+
+#     for movie_dict in response.get('results'):
+#         if not movie_dict.get('release_date'): continue   # 없는 필드 skip
+#         # 유투브 key 조회
+#         youtube_key = get_youtube_key(movie_dict)
+#         runtime = get_runtime(movie_dict)
+
+#         movie = Movie.objects.create(
+#             id=movie_dict.get('id'),
+#             title=movie_dict.get('title'),
+#             release_date=movie_dict.get('release_date'),
+#             popularity=movie_dict.get('popularity'),
+#             vote_count=movie_dict.get('vote_count'),
+#             vote_average=movie_dict.get('vote_average'),
+#             overview=movie_dict.get('overview'),
+#             poster_path=movie_dict.get('poster_path'),   
+#             youtube_key=youtube_key,
+#             runtime=runtime,
+#         )
+#         for genre_id in movie_dict.get('genre_ids', []):
+#             movie.genres.add(genre_id)
+
+#         # 배우들 저장
+#         get_actors(movie)
+#         get_directors(movie)
+#         print('>>>', movie.title, '==>', movie.youtube_key)
+
+# def popular_tmdb_data(request):
 #     Genre.objects.all().delete()
 #     Actor.objects.all().delete()
 #     Movie.objects.all().delete()
@@ -146,19 +280,27 @@
 
 #     tmdb_genres()
 #     for i in range(1, 21):
-#         movie_data(i)
+#         popular_movie_data(i)
 #     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
 
+# def top_rated_tmdb_data(request):
+#     Genre.objects.all().delete()
+#     Actor.objects.all().delete()
+#     Movie.objects.all().delete()
+#     Director.objects.all().delete()
 
+#     tmdb_genres()
+#     for i in range(1, 21):
+#         top_rated_movie_data(i)
+#     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
 
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+# def upcoming_tmdb_data(request):
+#     Genre.objects.all().delete()
+#     Actor.objects.all().delete()
+#     Movie.objects.all().delete()
+#     Director.objects.all().delete()
 
-from .models import Movie
-from .serializers.movie import MovieListSerializer
-
-@api_view(['GET', ])
-def movies(request):
-    movies = Movie.objects.all()
-    serializer = MovieListSerializer(movies, many=True)
-    return Response(serializer.data)
+#     tmdb_genres()
+#     for i in range(1, 21):
+#         upcoming_movie_data(i)
+#     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')

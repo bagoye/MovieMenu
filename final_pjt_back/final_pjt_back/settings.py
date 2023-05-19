@@ -68,15 +68,26 @@ REST_AUTH = { # 회원가입시 토큰 발급
     'SESSION_LOGIN': False,
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+]
+
+
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:8080',
+# ]
+
+# CORS_ALLOWED_ALL_ORIGINS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 # 하나의 컨텐츠로 여러 개의 도메인에 등록하고 싶을 때 사용
 SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
