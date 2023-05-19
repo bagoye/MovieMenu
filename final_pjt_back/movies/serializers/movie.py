@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from movies.models import Movie, Genre, Actor, Director
-from .actor import ActorSerializer, ActorListSerializer
+# from .actor import ActorSerializer, ActorListSerializer
 # from community.serializers.article import ArticleSerializer
 from django.contrib.auth import get_user_model
 
@@ -19,7 +19,7 @@ class MovieSerializer(serializers.ModelSerializer):
             fields = ('pk', 'username')
         
     genres = GenreSerializer(read_only=True, many=True)
-    actors = ActorSerializer(read_only=True, many=True)
+    # actors = ActorSerializer(read_only=True, many=True)
     bookmark_users = UserSerializer(read_only=True, many=True)
     bookmarks_count = serializers.IntegerField(source="bookmark_users.count")
     # article_set = ArticleSerializer(read_only=True, many=True)

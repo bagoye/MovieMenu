@@ -40,7 +40,7 @@ class MovieDirectors(models.Model):
     director = models.ForeignKey(Director, on_delete=models.CASCADE)
 
 class MovieReview(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='movie_reviews')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -48,5 +48,5 @@ class MovieReview(models.Model):
     score = models.FloatField()
 
 class ReviewLike(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='review_likes')
     movie_review = models.ForeignKey(MovieReview, on_delete=models.CASCADE)
