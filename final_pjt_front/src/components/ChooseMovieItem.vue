@@ -1,6 +1,12 @@
 <template>
   <div>
-    <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`" alt="...">
+    <router-link 
+    :to="{
+      name:'MovieDetailView', 
+      params: { pk: movie.id }}">
+      <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`">
+    </router-link>
+
     {{ movie.title }}
   </div>
 </template>
@@ -11,6 +17,7 @@ export default {
   props: {
     movie: Object
   },
+
 
 }
 </script>

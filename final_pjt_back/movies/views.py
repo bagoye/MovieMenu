@@ -1,10 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import JsonResponse, HttpResponse
-from .models import Movie, Genre
-
+from .models import Movie, Genre, Actor
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
+from rest_framework import status
 from .models import Movie
 from .serializers.movie import MovieListSerializer
 
@@ -48,7 +47,7 @@ def allmovie(request):
 @api_view(['GET', ])
 def alonemovie(request):
     genre_pks = [18, 9648, 14, 35]
-    movie_data = Movie.objects.filter(genres__pk__in=genre_pks)
+    movie_data = Movie.objects.filter(genres__pk__in=genre_pks)[:180]
     serializer = MovieListSerializer(movie_data, many=True)
     return Response(serializer.data)
 
@@ -58,6 +57,69 @@ def lovermovie(request):
     movie_data = Movie.objects.filter(genres__pk__in=genre_pks)[:180]
     serializer = MovieListSerializer(movie_data, many=True)
     return Response(serializer.data)
+
+@api_view(['GET', ])
+def friendmovie(request):
+    genre_pks = [28, 80, 53, 878]
+    movie_data = Movie.objects.filter(genres__pk__in=genre_pks)[:180]
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', ])
+def familymovie(request):
+    genre_pks = [16, 10751, 18, 12]
+    movie_data = Movie.objects.filter(genres__pk__in=genre_pks)[:180]
+    serializer = MovieListSerializer(movie_data, many=True)
+    return Response(serializer.data)
+
+# @api_view(['GET', ])
+# def movie_detail(request, movie_pk):
+#     movie = get_object_or_404(Movie, pk=movie_pk)
+
+#     if request.method == 'GET':
+#         serializer = MovieListSerializer(movie)
+#         return Response(serializer.data)
+    
+# @api_view(['GET', ])
+# def actor_data(request):
+#     actor_data = Actor.objects.all()
+#     serializer = ActorSerializer(actor_data, many=True)
+#     return Response(serializer.data)
+
+@api_view(['GET', ])
+def movie_detail(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    
+    actors_data = []
+    for actor in movie.actors.all():
+        actor_data = {
+            'name': actor.name,
+            'profile_path': actor.profile_path.url if actor.profile_path else None
+        }
+        actors_data.append(actor_data)
+    
+    directors_data = []
+    for director in movie.directors.all():
+        director_data = {
+            'name': director.name,
+            'profile_path': director.profile_path.url if director.profile_path else None
+        }
+        directors_data.append(director_data)
+    
+    movie_data = {
+        'title': movie.title,
+        'release_date': movie.release_date,
+        'runtime': movie.runtime,
+        'youtube_key': movie.youtube_key,
+        'vote_average': movie.vote_average,
+        'overview': movie.overview,
+
+        # 다른 필드들도 필요에 따라 추가
+        'actors': actors_data,
+        'directors': directors_data
+    }
+    
+    return JsonResponse(movie_data)
 
 
 

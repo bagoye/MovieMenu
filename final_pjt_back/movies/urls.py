@@ -10,4 +10,7 @@ urlpatterns = [
     path('allmovie/', views.allmovie),
     path('alonemovie/', views.alonemovie),
     path('lovermovie/', views.lovermovie),
+    path('friendmovie/', views.friendmovie),
+    path('familymovie/', views.familymovie),
+    path('<int:movie_pk>/', views.movie_detail),
 ]

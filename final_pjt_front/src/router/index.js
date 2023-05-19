@@ -4,8 +4,11 @@ import HomeView from '../views/Movies/HomeView'
 import ChooseView from '../views/Movies/ChooseView'
 import AloneMovieView from '../views/Movies/AloneMovieView'
 import LoverMovieView from '../views/Movies/LoverMovieView'
+import FriendMovieView from '../views/Movies/FriendMovieView'
+import FamilyMovieView from '../views/Movies/FamilyMovieView'
 import NormalMovieView from '../views/Movies/NormalMovieView'
 import RandomMovieView from '../views/Movies/RandomMovieView'
+import MovieDetailView from '../views/Movies/MovieDetailView'
 import CommunityView from '../views/CommunityView'
 import AccountView from '../views/AccountView'
 
@@ -33,6 +36,16 @@ const routes = [
     component: LoverMovieView
   },
   {
+    path: '/choosefriend',
+    name: 'FriendMovieView',
+    component: FriendMovieView
+  },
+  {
+    path: '/choosefamily',
+    name: 'FamilyMovieView',
+    component: FamilyMovieView
+  },
+  {
     path: '/normal',
     name: 'NormalMovieView',
     component: NormalMovieView
@@ -41,6 +54,11 @@ const routes = [
     path: '/momakase',
     name: 'RandomMovieView',
     component: RandomMovieView
+  },
+  {
+    path: '/:pk',
+    name: 'MovieDetailView',
+    component: MovieDetailView
   },
   {
     path: '/community',
