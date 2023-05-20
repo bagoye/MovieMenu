@@ -4,9 +4,9 @@
       <img src="./assets/dayoungsuyeom.png" class="logo-img" alt="logo" @click="toHome">
 
       <div class="nav-link">
-        <router-link :to="{name: 'HomeView'}">홈</router-link>
-        <router-link :to="{name: 'RandomMovieView'}">오늘의 추천</router-link>
-        <router-link :to="{name: 'CommunityView'}">커뮤니티</router-link>
+        <router-link :to="{name: 'HomeView'}" exact-active-class="active-link">홈</router-link>
+        <router-link :to="{name: 'RandomMovieView'}" exact-active-class="active-link">오늘의 추천</router-link>
+        <router-link :to="{name: 'CommunityView'}" exact-active-class="active-link">커뮤니티</router-link>
         <span v-if="isLogin">
           <!-- 로그인 되어있을 때 -->
           <a href="#" @click.prevent="logout">로그아웃</a>
@@ -15,7 +15,7 @@
 
         <span v-if="!isLogin">
           <!-- 로그인 되어있지 않을 때 -->
-          <router-link :to="{name: 'LoginView'}">로그인</router-link>
+          <router-link :to="{name: 'LoginView'}" exact-active-class="active-link">로그인</router-link>
         </span>
        </div>
 
@@ -76,6 +76,7 @@ nav {
 
   position: fixed;
   top: 0;
+  z-index: 100;
 }
 
 .divide-block {
@@ -94,6 +95,12 @@ nav {
   font-size: 16px;
   color: #000;
   text-decoration: none;
+}
+.nav-link *:hover {
+  color: #2E8ADF;
+}
+.active-link {
+  color: #2E8ADF;
 }
 
 .nav-link > span {
