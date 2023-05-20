@@ -7,26 +7,39 @@
         <router-link :to="{name: 'HomeView'}">홈</router-link>
         <router-link :to="{name: 'RandomMovieView'}">오늘의 추천</router-link>
         <router-link :to="{name: 'CommunityView'}">커뮤니티</router-link>
-        <router-link :to="{name: 'AccountView'}">로그인</router-link>
-        <!-- 회원가입은 로그인 페이지 들어가있을 때 보일거임 -->
-        <!-- <router-link to="/">Logout</router-link> | -->
-        <!-- 로그아웃, 로그인은 로그인 돼있을 때 떠야해서 v-if로 조건 줘야할듯 -->
-        <a href="#" class="profile-btn"><img src="#" alt="profile image" v-if="img">dd</a>
-      </div>
+        <span v-if="isLogin">
+          <!-- 로그인 되어있을 때 -->
+          <a href="#" @click.prevent="logout">로그아웃</a>
+          <a href="#" class="profile-btn"><img src="#" alt="profile image">dd</a>
+        </span>
+
+        <span v-if="!isLogin">
+          <!-- 로그인 되어있지 않을 때 -->
+          <router-link :to="{name: 'LoginView'}">로그인</router-link>
+        </span>
+       </div>
 
     </nav>
+
+    <!-- divide-block == 위에 여백주기 위해서 (nav랑 content 겹침 방지) 수정해야됨 -->
     <div class="divide-block"></div>
     <router-view/>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'app',
+  computed: {
+    ...mapGetters(['isLogin']),
+  },
   methods: {
     toHome() {
       this.$router.push({name: 'HomeView'}).catch(() => {})
-    }
+    },
+    ...mapActions(['logout', ])
   }
 }
 </script>
@@ -39,6 +52,11 @@ body {
 #app {
   width: 1094px;
   margin: 0 auto;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: bold; /* 800 */
 }
 
 .logo-img {
@@ -71,6 +89,10 @@ nav {
   font-size: 16px;
   color: #000;
   text-decoration: none;
+}
+
+.nav-link > span {
+  margin-left: 0;
 }
 
 .profile-btn {

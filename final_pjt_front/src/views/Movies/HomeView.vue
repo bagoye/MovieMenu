@@ -15,18 +15,27 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'HomeView',
+  computed: {
+    ...mapGetters(['isLogin'])
+  },
   methods: {
  
     toChooseView() {
-      this.$router.push({name: 'ChooseView'})
+      if (this.isLogin) {
+        this.$router.push({name: 'ChooseView'})
+      } else if (!this.isLogin) {
+        this.$router.push({name: 'LoginView'})
+      }
     },
     toNormalMovieView() {
       this.$router.push({name: 'NormalMovieView'})
     }
-    },
-  }
+  },
+}
 
 </script>
 

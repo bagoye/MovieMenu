@@ -9,8 +9,11 @@ import FamilyMovieView from '../views/Movies/FamilyMovieView'
 import NormalMovieView from '../views/Movies/NormalMovieView'
 import RandomMovieView from '../views/Movies/RandomMovieView'
 import MovieDetailView from '../views/Movies/MovieDetailView'
-import CommunityView from '../views/CommunityView'
-import AccountView from '../views/AccountView'
+import CommunityView from '../views/Community/CommunityView'
+
+import LoginView from '../views/Accounts/LoginView'
+import SignupView from '../views/Accounts/SignupView'
+import NotFoundView from '../views/NotFoundView'
 
 Vue.use(VueRouter)
 
@@ -23,7 +26,10 @@ const routes = [
   {
     path: '/choose',
     name: 'ChooseView',
-    component: ChooseView
+    component: ChooseView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/choosealone',
@@ -56,19 +62,37 @@ const routes = [
     component: RandomMovieView
   },
   {
-    path: '/:pk',
+    path: 'movie/:pk',
     name: 'MovieDetailView',
-    component: MovieDetailView
+    component: MovieDetailView,
   },
   {
     path: '/community',
     name: 'CommunityView',
     component: CommunityView
   },
+
+  // 회원관리
   {
-    path: '/account',
-    name: 'AccountView',
-    component: AccountView
+    path: '/login',
+    name: 'LoginView',
+    component: LoginView
+  },
+  {
+    path: '/signup',
+    name: 'SignupView',
+    component: SignupView
+  },
+
+  // 404 not found
+  {
+    path: '/404',
+    name: 'NotFound',
+    component: NotFoundView
+  },
+  {
+    path: '*',
+    redirect: '/404',
   },
 
 ]
