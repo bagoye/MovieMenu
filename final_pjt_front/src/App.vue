@@ -45,6 +45,10 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: "Elice Digital Baeum", sans-serif;
+}
+
 body {
   background-color: #FFFBEF;
 }
@@ -86,6 +90,7 @@ nav {
 
 .nav-link * {
   margin-left: 40px;
+  font-weight: bold;
   font-size: 16px;
   color: #000;
   text-decoration: none;

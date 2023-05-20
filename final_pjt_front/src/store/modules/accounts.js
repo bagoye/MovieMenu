@@ -52,7 +52,8 @@ export default {
           context.dispatch('getUserInfo')
           router.push({name: 'HomeView'}).catch(() => {})
         })
-        .catch(err => console.log(err))      
+        .catch((err) => {console.log(err)
+        alert('아이디나 비밀번호 틀렸어욧 -0-;;;')})      
     },
     getUserInfo({getters, commit}) {
       axios({
