@@ -10,11 +10,11 @@
         <span v-if="isLogin">
           <!-- 로그인 되어있을 때 -->
           <a href="#" @click.prevent="logout">로그아웃</a>
-          <!-- <router-link :to="{
+          <router-link :to="{
             name: 'ProfileView',
-            params: {userid: user.pk}}">
+            params: {userid: user}}">
             <img src="#" alt="profile image">
-          </router-link> -->
+          </router-link>
         </span>
 
         <span v-if="!isLogin">
@@ -38,12 +38,12 @@ export default {
   name: 'app',
   data() {
     return {
-      user: this.$store.state.userInfo
+      user: this.$store.state.userInfo.pk
     }
   },
   created() {
     this.$store.dispatch('getUserInfo')
-    console.log(this.user)
+    console.log(this.user.data)
   },
   computed: {
     ...mapGetters(['isLogin']),

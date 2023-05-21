@@ -22,7 +22,6 @@ import LoginView from '../views/Accounts/LoginView'
 import SignupView from '../views/Accounts/SignupView'
 import ProfileView from '../views/Accounts/ProfileView'
 
-import store from '@/store'
 
 // 404
 import NotFoundView from '../views/NotFoundView'
@@ -95,12 +94,6 @@ const routes = [
     path: '/profile/:userid',
     name: 'ProfileView',
     component: ProfileView,
-    beforeEnter: (to, from, next) => {
-      // 이전 URL과 사용자 ID 저장
-      store.dispatch('savePreviousURL', from.fullPath)
-      store.dispatch('savePreviousUserID', from.params.userid)
-      next()
-    }
   },
 
   // community
