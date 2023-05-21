@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
 import accounts from './modules/accounts'
+import community from './modules/community'
 
 
 Vue.use(Vuex)
@@ -16,5 +17,6 @@ export default new Vuex.Store({
   
   modules: {
     accounts,
+    community,
   }
 })

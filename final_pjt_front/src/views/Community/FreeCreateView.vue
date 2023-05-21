@@ -1,8 +1,6 @@
-<!-- views/CreateView.vue -->
-
 <template>
   <div>
-    <h1>FreeCreateView 작성</h1>
+    <h1>게시글 작성</h1>
     <form @submit.prevent="createArticle">
       <label for="title">제목 : </label>
       <input type="text" id="title" v-model.trim="title"><br>
@@ -18,7 +16,7 @@ import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
-  name: 'FreeCreateView',
+  name: 'CreateView',
   data() {
     return {
       title: null,
@@ -39,8 +37,9 @@ export default {
       }
       axios({
         method: 'post',
-        url: `${API_URL}/api/v1/articles/`,
+        url: `${API_URL}/community/free/`,
         data: { title, content},
+
       })
       .then(() => {
         // console.log(res)

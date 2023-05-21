@@ -1,12 +1,12 @@
 <template>
   <div>
-    TogetherCommunityListItem
+
   </div>
 </template>
 
 <script>
 export default {
-  name: 'TogetherCommunityListItem'
+  name: 'TogetherCreateView',
 }
 </script>
 

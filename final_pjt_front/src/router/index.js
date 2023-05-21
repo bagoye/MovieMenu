@@ -9,8 +9,14 @@ import FamilyMovieView from '../views/Movies/FamilyMovieView'
 import NormalMovieView from '../views/Movies/NormalMovieView'
 import RandomMovieView from '../views/Movies/RandomMovieView'
 import MovieDetailView from '../views/Movies/MovieDetailView'
-import CommunityView from '../views/Community/CommunityView'
 
+// community 관련
+import CommunityView from '../views/Community/CommunityView'
+import FreeCommunityView from '../views/Community/FreeCommunityView'
+import TogetherCommunityView from '../views/Community/TogetherCommunityView'
+import FreeCreateView from '../views/Community/FreeCreateView'
+
+// 로그인 관련
 import LoginView from '../views/Accounts/LoginView'
 import SignupView from '../views/Accounts/SignupView'
 import NotFoundView from '../views/NotFoundView'
@@ -66,11 +72,7 @@ const routes = [
     name: 'MovieDetailView',
     component: MovieDetailView,
   },
-  {
-    path: '/community',
-    name: 'CommunityView',
-    component: CommunityView
-  },
+
 
   // 회원관리
   {
@@ -83,6 +85,32 @@ const routes = [
     name: 'SignupView',
     component: SignupView
   },
+
+  // community
+  {
+    path: '/community',
+    name: 'CommunityView',
+    component: CommunityView,
+    children: [
+      {
+        path: '/together',
+        name: 'TogetherCommunityView',
+        component: TogetherCommunityView
+      },
+      {
+        path: '/free',
+        name: 'FreeCommunityView',
+        component: FreeCommunityView
+      },
+      {
+        path: '/freecreate',
+        name: 'FreeCreateView',
+        component: FreeCreateView
+      },
+    ]
+  },
+
+
 
   // 404 not found
   {

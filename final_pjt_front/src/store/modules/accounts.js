@@ -6,8 +6,7 @@ const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   state: {
-    articles: [
-    ],
+    articles: [],
     token: null,
     userInfo: null,
   },
@@ -36,9 +35,21 @@ export default {
         .then(res => {
           console.log(res)
           context.commit('SET_TOKEN', res.data.key)
-          context.dispatch('getUserInfo')          
+          context.dispatch('getUserInfo') 
+  
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          console.log(err.response.data)
+          if (err.response.data.non_field_errors == "The two password fields didn't match.") {
+            alert('비밀번호가 일치하지 않음')
+          } else if (err.response.data.username == 'A user with that username already exists.') {
+            alert('이미 존재하는 아이디임')
+          } else if (err.response.data.password1 == "This password is too short. It must contain at least 8 characters.") {
+            alert('비밀번호 넘 짧음 -0- ;;;')
+          }
+        })       
+        
+
     },
     login(context, data) {      
       axios({

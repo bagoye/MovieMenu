@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import FreeArticle, TogetherArticle, FreeComment, TogetherComment
-from .serializers.community import FreeArticleSerializer, FreeCommentSerializer, TogetherArticleSerializer, TogetherCommentSerializer
+from .serializers.community import FreeArticleSerializer, FreeCommentSerializer, TogetherArticleSerializer, TogetherCommentSerializer, FreeArticleListSerializer
 	
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -16,7 +16,7 @@ def free_article(request):
     if request.method == 'GET':
         # articles = Article.objects.all()
         articles = get_list_or_404(FreeArticle)
-        serializer = FreeArticleSerializer(articles, many=True)
+        serializer = FreeArticleListSerializer(articles, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
