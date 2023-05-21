@@ -5,7 +5,7 @@ from django.conf import settings
 
 	
 def user_profile_image_path(instance, filename):
-        return f'profile_image_{instance.pk}/{filename}'
+     return f'profile_image_{instance.pk}/{filename}'
 
 # Create your models here.
 class User(AbstractUser):
