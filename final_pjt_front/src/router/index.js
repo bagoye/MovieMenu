@@ -15,10 +15,16 @@ import CommunityView from '../views/Community/CommunityView'
 import FreeCommunityView from '../views/Community/FreeCommunityView'
 import TogetherCommunityView from '../views/Community/TogetherCommunityView'
 import FreeCreateView from '../views/Community/FreeCreateView'
+import FreeDetailView from '../views/Community/FreeDetailView'
 
 // 로그인 관련
 import LoginView from '../views/Accounts/LoginView'
 import SignupView from '../views/Accounts/SignupView'
+import ProfileView from '../views/Accounts/ProfileView'
+
+import store from '@/store'
+
+// 404
 import NotFoundView from '../views/NotFoundView'
 
 Vue.use(VueRouter)
@@ -85,6 +91,17 @@ const routes = [
     name: 'SignupView',
     component: SignupView
   },
+  {
+    path: '/profile/:userid',
+    name: 'ProfileView',
+    component: ProfileView,
+    beforeEnter: (to, from, next) => {
+      // 이전 URL과 사용자 ID 저장
+      store.dispatch('savePreviousURL', from.fullPath)
+      store.dispatch('savePreviousUserID', from.params.userid)
+      next()
+    }
+  },
 
   // community
   {
@@ -108,6 +125,11 @@ const routes = [
         component: FreeCreateView
       },
     ]
+  },
+  {
+    path: '/free/:freepk',
+    name: 'FreeDetailView',
+    component: FreeDetailView
   },
 
 

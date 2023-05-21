@@ -10,7 +10,11 @@
         <span v-if="isLogin">
           <!-- 로그인 되어있을 때 -->
           <a href="#" @click.prevent="logout">로그아웃</a>
-          <a href="#" class="profile-btn"><img src="#" alt="profile image">dd</a>
+          <!-- <router-link :to="{
+            name: 'ProfileView',
+            params: {userid: user.pk}}">
+            <img src="#" alt="profile image">
+          </router-link> -->
         </span>
 
         <span v-if="!isLogin">
@@ -32,6 +36,15 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      user: this.$store.state.userInfo
+    }
+  },
+  created() {
+    this.$store.dispatch('getUserInfo')
+    console.log(this.user)
+  },
   computed: {
     ...mapGetters(['isLogin']),
   },
@@ -39,7 +52,11 @@ export default {
     toHome() {
       this.$router.push({name: 'HomeView'}).catch(() => {})
     },
-    ...mapActions(['logout', ])
+    toProfile() {
+      this.$router.push({name: 'ProfileView'}).catch(() => {})
+    },
+    ...mapActions(['logout',]),
+    
   }
 }
 </script>
