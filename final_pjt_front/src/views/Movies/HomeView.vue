@@ -72,7 +72,6 @@ export default {
 }
 .btn-blue {
   background-color: #2E8ADF;
-  font-weight: bold;
   color: #fff;
 }
 </style>
