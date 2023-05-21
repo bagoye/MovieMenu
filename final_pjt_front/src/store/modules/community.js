@@ -4,6 +4,7 @@ const API_URL = 'http://127.0.0.1:8000'
 export default {
   state: {
     articles: [],
+    token: null
   },
   getters: {
     articles: (state) => state.articles,
@@ -24,7 +25,8 @@ export default {
           context.commit('GET_ARTICLES', res.data)
         })
         .catch((err) => {
-          console.log(err)          
+          console.log(err)
+          console.log('get에서 오류남!!!!')
         })
     },
 

@@ -1,12 +1,13 @@
 <template>
   <div>
-    <h5>{{ article.id }}</h5>
-    <p>{{ article.title }}</p>
-    <router-link :to="{
+    <div>안녕하세요아티클리스트아이템</div>
+    <h5>{{ article }}</h5>
+    <!-- <p>{{ article.title }}</p> -->
+    <!-- <router-link :to="{
       name: 'DetailView',
-      params: {id: article.id }}">
+      params: {id: article.id}}">
       [DETAIL]
-    </router-link>
+    </router-link> -->
     <hr>
   </div>
 </template>

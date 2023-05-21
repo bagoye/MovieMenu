@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>게시글 작성</h1>
+    <h1>자유 게시글 작성</h1>
     <form @submit.prevent="createArticle">
       <label for="title">제목 : </label>
       <input type="text" id="title" v-model.trim="title"><br>
@@ -35,18 +35,21 @@ export default {
         alert('내용 입력해주세요')
         return
       }
+
       axios({
         method: 'post',
         url: `${API_URL}/community/free/`,
         data: { title, content},
-
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
       })
       .then(() => {
-        // console.log(res)
-        this.$router.push({name: 'CommunityView'})
+        this.$router.push({name: 'FreeCommunityView'})
       })
       .catch((err) => {
         console.log(err)
+        console.log('post에서 오류가 난닷')
       })
     }
   }

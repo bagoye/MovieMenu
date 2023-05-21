@@ -2,7 +2,10 @@
   <div>
     ArticleList
     <ArticleListItem 
-    v-for="article in articles" :key="article.id" :article="article"/>
+      v-for="(article, index) in articles" :key="`article-${index}`"
+      :article="article"
+    />
+    <!-- <ArticleListItem /> -->
   </div>
 </template>
 
@@ -18,9 +21,6 @@ export default {
     articles() {
       return this.$store.state.articles
     }
-  },
-  created() {
-    this.getArticles()
   },
   methods: {
 

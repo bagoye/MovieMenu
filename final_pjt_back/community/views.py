@@ -9,7 +9,7 @@ from .serializers.community import FreeArticleSerializer, FreeCommentSerializer,
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 
-# Create your views here.
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def free_article(request):
@@ -20,13 +20,9 @@ def free_article(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = FreeArticleSerializer(data=request.data)
+        serializer = FreeArticleSerializer(data=request.data, context={'request': request})
         if serializer.is_valid(raise_exception=True):
             # serializer.save()
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-# @api_view(['GET', 'POST'])
-# def together_article() {
-  
-# }
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
