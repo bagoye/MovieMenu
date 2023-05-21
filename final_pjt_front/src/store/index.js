@@ -18,10 +18,8 @@ export default new Vuex.Store({
     token: null,
     userInfo: null,
     articles: [],
+    reviews: [],
 
-    //
-    // previousURL: null,
-    // previousUserID: null
   },
   getters: {
     isLogin: (state) => state.token ? true: false,
@@ -39,20 +37,10 @@ export default new Vuex.Store({
     GET_ARTICLES(state, articles) {
       state.articles = articles
     },
+    GET_REVIEWS(state, reviews) {
+      state.reviews = reviews
+    },
 
-    //
-    // setPreviousURL(state, url) {
-    //   state.previousURL = url
-    // },
-    // setPreviousUserID(state, userID) {
-    //   state.previousUserID = userID
-    // },
-    // clearPreviousURL(state) {
-    //   state.previousURL = null
-    // },
-    // clearPreviousUserID(state) {
-    //   state.previousUserID = null
-    // }
   },
   actions: {
     signUp(context, data) {
@@ -117,9 +105,6 @@ export default new Vuex.Store({
           commit('SET_USERINFO', null)
           router.push({name: 'HomeView'}).catch(() => {})
 
-          //
-          // commit('clearPreviousURL')
-          // commit('clearPreviousUserID')
         })
         .catch(err => console.log(err))
     },
@@ -136,15 +121,23 @@ export default new Vuex.Store({
             console.log(err)
             console.log('get에서 오류남!!!!')
           })
-      },
+    },
 
-      //
-      // savePreviousURL({ commit }, url) {
-      //   commit('setPreviousURL', url)
-      // },
-      // savePreviousUserID({ commit }, userID) {
-      //   commit('setPreviousUserID', userID)
-      // },
+    getReviews(context) {
+        axios({
+          method: 'get',
+          url: `${API_URL}/review/`,
+          headers: context.getters.authHeader
+        })
+          .then((res) => {
+            context.commit('GET_REVIEWS', res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+            console.log('get에서 오류남!!!!')
+          })
+    },
+
 
   },
 })

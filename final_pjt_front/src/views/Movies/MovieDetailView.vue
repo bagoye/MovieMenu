@@ -16,15 +16,21 @@
         {{ actor.name }}
       </div>
     <p>줄거리: {{ movie?.overview }} </p>
-
+    <div class="review-list">
+      <ReviewList />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import ReviewList from '@/components/ReviewList'
 
 export default {
   name: 'MovieDetailView',
+  components: {
+    ReviewList,
+  },
   data() {
     return {
       movie: null,

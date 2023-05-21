@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import JsonResponse, HttpResponse
-from .models import Movie, Genre, Actor
+from .models import Movie, Genre, Actor, MovieReview
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import Movie
-from .serializers.movie import MovieListSerializer
+from .serializers.movie import MovieListSerializer, MovieReviewSerializer
 
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET', ])
 def popular(request):
@@ -72,20 +74,6 @@ def familymovie(request):
     serializer = MovieListSerializer(movie_data, many=True)
     return Response(serializer.data)
 
-# @api_view(['GET', ])
-# def movie_detail(request, movie_pk):
-#     movie = get_object_or_404(Movie, pk=movie_pk)
-
-#     if request.method == 'GET':
-#         serializer = MovieListSerializer(movie)
-#         return Response(serializer.data)
-    
-# @api_view(['GET', ])
-# def actor_data(request):
-#     actor_data = Actor.objects.all()
-#     serializer = ActorSerializer(actor_data, many=True)
-#     return Response(serializer.data)
-
 @api_view(['GET', ])
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
@@ -122,6 +110,27 @@ def movie_detail(request, movie_pk):
     return JsonResponse(movie_data)
 
 
+# 리뷰 CREATE / READ / DELETE / UPDATE
+@api_view(['GET', 'POST', 'PUT', ])
+@permission_classes([IsAuthenticated])
+def movie_review(request):
+    if request.method == 'GET':
+        reviews = get_list_or_404(MovieReview)
+        serializer = MovieReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = MovieReviewSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'PUT':
+        serializer = MovieReviewSerializer(reviews, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
 
 
 # ------------------- json 데이터 가져오기---------------------------
