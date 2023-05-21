@@ -6,7 +6,6 @@ const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   state: {
-    articles: [],
     token: null,
     userInfo: null,
   },
@@ -15,15 +14,12 @@ export default {
     authHeader: (state) => ({Authorization: `Token ${state.token}`}),
   },
   mutations: {
-
     // signup & login -> 완료하면 토큰 발급
     SET_TOKEN(state, token) {
       state.token = token
-      router.push({name : 'HomeView'}).catch(() => {}) // store/index.js $router 접근 불가 -> import를 해야함
+      router.push({name : 'HomeView'}).catch(() => {})
     },
-
     SET_USERINFO: (state, userInfo) => state.userInfo = userInfo,
-
   },
   actions: {
     signUp(context, data) {
@@ -48,8 +44,6 @@ export default {
             alert('비밀번호 넘 짧음 -0- ;;;')
           }
         })       
-        
-
     },
     login(context, data) {      
       axios({

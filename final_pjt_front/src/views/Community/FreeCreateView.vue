@@ -43,7 +43,7 @@ export default {
       })
       .then(() => {
         // console.log(res)
-        this.$router.push({name: 'ArticleView'})
+        this.$router.push({name: 'CommunityView'})
       })
       .catch((err) => {
         console.log(err)

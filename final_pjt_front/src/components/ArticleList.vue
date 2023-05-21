@@ -8,14 +8,22 @@
 
 <script>
 import ArticleListItem from '@/components/ArticleListItem'
-import { mapGetters } from 'vuex'
+
 export default {
   name: 'ArticleList',
     components: {
     ArticleListItem,
   },
   computed: {
-    ...mapGetters(['articles', ]),
+    articles() {
+      return this.$store.state.articles
+    }
+  },
+  created() {
+    this.getArticles()
+  },
+  methods: {
+
   }
 }
 </script>
