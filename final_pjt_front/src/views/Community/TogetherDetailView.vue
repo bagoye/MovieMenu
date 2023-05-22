@@ -15,12 +15,12 @@
     <div v-if="isEditMode">
       <input v-model="editedTitle" placeholder="수정할 제목" />
       <textarea v-model="editedContent" placeholder="수정할 내용"></textarea>
-      <button @click="articleUpdate">저장</button>
+      <button @click="togetherArticleUpdate">저장</button>
       <button @click="cancelEdit">취소</button>
     </div>
     <div v-else>
       <button @click="toggleEditMode">수정</button>
-      <button @click="articleDelete">삭제</button>
+      <button @click="togetherArticleDelete">삭제</button>
     </div>
   </div>
 </template>
@@ -42,8 +42,8 @@ export default {
     }
   },
   created() {
-    this.getArticleDetail()
-    this.resultMovie = this.article.searchResult
+    this.getTogetherArticleDetail()
+    // this.resultMovie = this.article.searchResult
   },
   computed: {
     ...mapGetters(['getResultMovie']),
@@ -52,7 +52,7 @@ export default {
     }
   },
   methods: {
-    getArticleDetail() {
+    getTogetherArticleDetail() {
       axios({
         method: 'get',
         url: `${API_URL}/community/together/${ this.$route.params.togetherpk }`,
@@ -67,7 +67,7 @@ export default {
         console.log(err)
       })
     },
-    articleDelete() {
+    togetherArticleDelete() {
       // 글 작성자와 로그인한 사용자를 비교하여 권한을 확인
       if (this.articlesTogether.user !== this.$store.state.userInfo?.pk) {
         // 작성자가 아닌 경우 알림을 띄웁니다.
@@ -91,7 +91,7 @@ export default {
         console.log(err)
       })
     },
-    articleUpdate() {
+    togetherArticleUpdate() {
       // 글 작성자와 로그인한 사용자를 비교하여 권한을 확인
       if (this.articlesTogether.user !== this.$store.state.userInfo?.pk) {
         // 작성자가 아닌 경우 알림을 띄웁니다.
