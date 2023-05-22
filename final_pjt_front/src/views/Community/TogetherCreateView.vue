@@ -60,6 +60,11 @@ export default {
     createArticle() {
       const title = this.title
       const content = this.content
+      const article = {
+        title: this.title,
+        content: this.content,
+        movie: this.resultMovie // 영화 정보를 게시글에 추가
+      };
 
       if (!title) {
         alert('제목 입력해주세요')
@@ -72,7 +77,8 @@ export default {
       axios({
         method: 'post',
         url: `${API_URL}/community/together/`,
-        data: { title, content},
+        // data: { title, content},
+        data: article,
         headers: {
           Authorization: `Token ${this.$store.state.token}`
         }
@@ -89,7 +95,7 @@ export default {
         console.log('같이봐욥 post에서 오류 발생')
       })
     },
-    searchMovie() {
+    async searchMovie() {
       if (this.movies && this.search) {
         this.searchResult = this.movies.filter((movie) =>
           movie.title.includes(this.search)
