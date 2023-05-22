@@ -41,6 +41,12 @@ export default new Vuex.Store({
     GET_REVIEWS(state, reviews) {
       state.reviews = reviews
     },
+    DELETE_ARTICLE(state, article) {
+      const index = state.articles.findIndex(a => a.id === article.id)
+      if (index !== -1) {
+        state.articles.splice(index, 1)
+      }
+    },
 
   },
   actions: {

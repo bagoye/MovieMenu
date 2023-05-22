@@ -50,14 +50,9 @@ export default {
       })
       .then((res) => {
         console.log(res)
-        this.$store.dispatch('getArticles') // 게시글 목록 갱신
+        this.$store.commit('DELETE_ARTICLE', this.article) // Vuex에서 해당 게시글 제거
         this.article = null
-        localStorage.removeItem('article') // 로컬 스토리지에서 삭제
-        this.$router.push({ name: 'FreeCommunityView' })
-        // localStorage.removeItem('article')
-        // this.article = null
-        // this.$router.push({name: 'FreeCommunityView'})
-        // this.$store.dispatch('getArticles')
+        this.$router.push({name: 'FreeCommunityView'})
       })
       .catch((err) => {
         console.log(err)
