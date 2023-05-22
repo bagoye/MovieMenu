@@ -22,7 +22,7 @@ export default {
   computed: {
     reviews() {
       return this.$store.state.reviews
-    }
+    },
   }
 }
 </script>

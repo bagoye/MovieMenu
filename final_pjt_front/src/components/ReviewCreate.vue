@@ -23,14 +23,16 @@ export default {
         return {
             content: null,
             score: null,
-            movieId: null,
         }
+    },
+    created() {
+      console.log(this.$store.state.token)
     },
     methods: {
     createReview() {
       const content = this.content
       const score = parseFloat(this.score)
-      const movieId = this.movieId
+      const routeParamsPk = this.$route.params.pk
 
       if (!content) {
         alert('내용 입력해주세요')
@@ -43,18 +45,20 @@ export default {
 
       axios({
         method: 'post',
-        url: `${API_URL}/movies/review/${movieId}/`,
+        url: `${API_URL}/movies/review/${routeParamsPk}/`,
+        // url: `${API_URL}/movies/review/`,
         data: {content, score},
         headers: {
           Authorization: `Token ${this.$store.state.token}`
         }
       })
-      .then(() => {
+      .then(() => { 
         console.log('안녕하세요?')
       })
       .catch((err) => {
         console.log(err)
         console.log('안된다고ㅡㅡ')
+        console.log(routeParamsPk)
       })
     }
   }

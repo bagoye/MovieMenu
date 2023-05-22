@@ -14,6 +14,6 @@ urlpatterns = [
     path('familymovie/', views.familymovie),
     path('<int:movie_pk>/', views.movie_detail),
 
-    # path('review/<int:movie_pk>/', views.movie_review),
-    path('review/', views.movie_review),
+    path('review/<int:movie_pk>/', views.movie_review),
+    # path('review/', views.movie_review),
 ]

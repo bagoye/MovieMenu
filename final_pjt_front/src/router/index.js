@@ -73,7 +73,7 @@ const routes = [
     component: RandomMovieView
   },
   {
-    path: 'movie/:pk',
+    path: '/movie/:pk',
     name: 'MovieDetailView',
     component: MovieDetailView,
   },
