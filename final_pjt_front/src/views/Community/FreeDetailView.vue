@@ -8,7 +8,14 @@
       <p>작성시간 : {{ article?.created_at }}</p>
       <p>수정시간 : {{ article?.updated_at }}</p>
     </div>
-    <div>
+    <div v-if="isEditMode">
+      <input v-model="editedTitle" placeholder="수정할 제목" />
+      <textarea v-model="editedContent" placeholder="수정할 내용"></textarea>
+      <button @click="articleUpdate">저장</button>
+      <button @click="cancelEdit">취소</button>
+    </div>
+    <div v-else>
+      <button @click="toggleEditMode">수정</button>
       <button @click="articleDelete">삭제</button>
     </div>
   </div>
@@ -23,7 +30,10 @@ export default {
   name: 'FreeDetailView',
   data() {
     return {
-      article: null
+      article: null,
+      editedTitle: '', // 수정된 제목을 저장하는 변수
+      editedContent: '', // 수정된 내용을 저장하는 변수
+      isEditMode: false,
     }
   },
   created() {
@@ -38,6 +48,8 @@ export default {
       .then((res) => {
         console.log(res)
         this.article = res.data
+        this.editedTitle = res.data.title // 초기 제목 설정
+        this.editedContent = res.data.content // 초기 내용 설정
       })
       .catch((err) => {
         console.log(err)
@@ -57,8 +69,33 @@ export default {
       .catch((err) => {
         console.log(err)
       })
-    }
-    
-  }
+    },
+    articleUpdate() {
+      const updatedArticle = {
+        title: this.editedTitle,
+        content: this.editedContent,
+      }
+      axios({
+        method: 'put',
+        url: `${API_URL}/community/free/${this.$route.params.freepk}`,
+        data: updatedArticle,
+      })
+      .then((res) => {
+        console.log(res)
+        this.article.title = this.editedTitle
+        this.article.content = this.editedContent
+        this.isEditMode = false
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    toggleEditMode() {
+      this.isEditMode = true
+    },
+    cancelEdit() {
+      this.isEditMode = false
+    },
+  },
 }
 </script>
