@@ -50,15 +50,31 @@ export default {
         this.article = res.data
         this.editedTitle = res.data.title // 초기 제목 설정
         this.editedContent = res.data.content // 초기 내용 설정
+        const userId = res.data.userid
+        const currentUserId = this.$store.state.userInfo?.pk
+        if (userId !== currentUserId) {
+          this.isEditMode = false
+        }
+        console.log(this.article.user)
+        console.log(this.$store.state.userInfo?.pk)
       })
       .catch((err) => {
         console.log(err)
       })
     },
     articleDelete() {
+      // 글 작성자와 로그인한 사용자를 비교하여 권한을 확인
+      if (this.article.user !== this.$store.state.userInfo?.pk) {
+        // 작성자가 아닌 경우 알림을 띄웁니다.
+        alert("작성자만 삭제할 수 있습니다.");
+        return;
+      }
       axios({
         method: 'delete',
         url: `${API_URL}/community/free/${ this.$route.params.freepk }`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
       })
       .then((res) => {
         console.log(res)
@@ -71,6 +87,13 @@ export default {
       })
     },
     articleUpdate() {
+      // 글 작성자와 로그인한 사용자를 비교하여 권한을 확인
+      if (this.article.user !== this.$store.state.userInfo?.pk) {
+        // 작성자가 아닌 경우 알림을 띄웁니다.
+        alert("작성자만 수정할 수 있습니다.");
+        return;
+      }
+
       const updatedArticle = {
         title: this.editedTitle,
         content: this.editedContent,
@@ -79,6 +102,9 @@ export default {
         method: 'put',
         url: `${API_URL}/community/free/${this.$route.params.freepk}`,
         data: updatedArticle,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        },
       })
       .then((res) => {
         console.log(res)

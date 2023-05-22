@@ -8,7 +8,7 @@ from .serializers.community import FreeArticleSerializer, FreeCommentSerializer,
 	
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.exceptions import PermissionDenied
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -29,21 +29,45 @@ def free_article(request):
     
 
 # 상세 FreeArticle 페이지
+# @api_view(['GET', 'DELETE', 'PUT'])
+# def free_detail(request, article_pk):
+#     # article = Article.objects.get(pk=article_pk)
+#     article = get_object_or_404(FreeArticle, pk=article_pk)
+
+#     if request.method == 'GET':
+#         serializer = FreeArticleListSerializer(article)
+#         print(serializer.data)
+#         return Response(serializer.data)
+    
+#     elif request.method == 'DELETE':
+#         article.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+#     elif request.method == 'PUT':
+#         serializer = FreeArticleSerializer(article, data=request.data)
+#         if serializer.is_valid(raise_exception=True):
+#             serializer.save()
+#             return Response(serializer.data)
+
 @api_view(['GET', 'DELETE', 'PUT'])
 def free_detail(request, article_pk):
-    # article = Article.objects.get(pk=article_pk)
     article = get_object_or_404(FreeArticle, pk=article_pk)
 
     if request.method == 'GET':
         serializer = FreeArticleListSerializer(article)
-        print(serializer.data)
         return Response(serializer.data)
     
     elif request.method == 'DELETE':
-        article.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        # 작성자와 로그인한 사용자 비교
+        if article.user == request.user:
+            article.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
     elif request.method == 'PUT':
+        # 작성자와 로그인한 사용자 비교
+        if article.user != request.user:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
         serializer = FreeArticleSerializer(article, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
