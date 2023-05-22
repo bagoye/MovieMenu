@@ -6,7 +6,7 @@
       <label for="content">내용 : </label>
       <textarea id="content" cols="30" rows="10" v-model="content"></textarea><br>
       <label for="score">평점 : </label>
-      <input type="number" id="score" min="0" max="5" step="0.5">
+      <input type="number" id="score" min="0" max="5" step="0.5" v-model="score">
       <input type="submit" id="submit">
     </form>
   </div>
@@ -23,25 +23,27 @@ export default {
         return {
             content: null,
             score: null,
+            movieId: null,
         }
     },
     methods: {
     createReview() {
       const content = this.content
       const score = parseFloat(this.score)
+      const movieId = this.movieId
 
       if (!content) {
         alert('내용 입력해주세요')
         return
       }
-      // else if (!score){
-      //   alert('평점 입력해주세요')
-      //   return
-      // }
+      else if (!score){
+        alert('평점 입력해주세요')
+        return
+      }
 
       axios({
         method: 'post',
-        url: `${API_URL}/review/`,
+        url: `${API_URL}/movies/review/${movieId}/`,
         data: {content, score},
         headers: {
           Authorization: `Token ${this.$store.state.token}`
@@ -52,6 +54,7 @@ export default {
       })
       .catch((err) => {
         console.log(err)
+        console.log('안된다고ㅡㅡ')
       })
     }
   }

@@ -40,6 +40,8 @@ export default {
   },
   created() {
     this.getMovieDetail()
+    
+    window.scrollTo(0, 0); // 스크롤 위치 조정
   },
   methods: {
     getMovieDetail() {

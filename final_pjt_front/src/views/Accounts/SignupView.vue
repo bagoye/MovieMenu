@@ -10,15 +10,6 @@
 
       <label for="password2"> password confirmation : </label>
       <input type="password" id="password2" v-model="password2">
-      
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="email"><br>
-
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" v-model="firstName"><br>
-
-      <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" v-model="lastName"><br>
 
       <input type="submit" value="SignUp">
     </form>
@@ -33,9 +24,6 @@ export default {
       username: null,
       password1: null,
       password2: null,
-      email: null,
-      firstName: null,
-      lastName: null,
     }
   },
   methods: {
@@ -44,13 +32,9 @@ export default {
       const username = this.username
       const password1 = this.password1
       const password2 = this.password2
-      const email = this.email
-      const firstName = this.firstName
-      const lastName = this.lastName
-
+      
       const payload = {
         username, password1, password2,
-        email, firstName, lastName
       }
 
       this.$store.dispatch('signUp', payload)

@@ -113,16 +113,17 @@ def movie_detail(request, movie_pk):
 # 리뷰 CREATE / READ / DELETE / UPDATE
 @api_view(['GET', 'POST', 'PUT', ])
 @permission_classes([IsAuthenticated])
-def movie_review(request):
+def movie_review(request, movie_id):
     if request.method == 'GET':
         reviews = get_list_or_404(MovieReview)
         serializer = MovieReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
+        movie_id = request.data.get('movie_id')
         serializer = MovieReviewSerializer(data=request.data, context={'request': request})
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            serializer.save(user=request.user, movie_id=movie_id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

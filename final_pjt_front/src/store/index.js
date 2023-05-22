@@ -126,7 +126,7 @@ export default new Vuex.Store({
     getReviews(context) {
         axios({
           method: 'get',
-          url: `${API_URL}/review/`,
+          url: `${API_URL}/movies/review/`,
           headers: context.getters.authHeader
         })
           .then((res) => {
