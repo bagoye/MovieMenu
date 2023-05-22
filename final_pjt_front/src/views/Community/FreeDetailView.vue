@@ -16,6 +16,7 @@
 
 <script>
 import axios from 'axios'
+
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
@@ -43,7 +44,24 @@ export default {
       })
     },
     articleDelete() {
-      
+      axios({
+        method: 'delete',
+        url: `${API_URL}/community/free/${ this.$route.params.freepk }`,
+      })
+      .then((res) => {
+        console.log(res)
+        this.$store.dispatch('getArticles') // 게시글 목록 갱신
+        this.article = null
+        localStorage.removeItem('article') // 로컬 스토리지에서 삭제
+        this.$router.push({ name: 'FreeCommunityView' })
+        // localStorage.removeItem('article')
+        // this.article = null
+        // this.$router.push({name: 'FreeCommunityView'})
+        // this.$store.dispatch('getArticles')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     }
     
   }
