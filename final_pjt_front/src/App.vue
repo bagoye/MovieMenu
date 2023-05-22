@@ -12,7 +12,7 @@
           <a href="#" @click.prevent="logout">로그아웃</a>
           <router-link :to="{
             name: 'ProfileView',
-            params: {userid: user}}">
+            params: {'userid': user}}">
             <img src="#" alt="profile image">
           </router-link>
         </span>

@@ -54,6 +54,8 @@ export default {
       })
       .then(() => { 
         console.log('안녕하세요?')
+        console.log(this.content, this.score)
+        this.$router.push({name: 'MovieDetailView', params: { pk: routeParamsPk }}).catch(() => {})
       })
       .catch((err) => {
         console.log(err)

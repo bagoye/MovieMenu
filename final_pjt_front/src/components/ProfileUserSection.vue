@@ -19,7 +19,7 @@ export default {
     return {
       user: this.$store.state.userInfo
     }
-  }
+  },
 }
 </script>
 

@@ -25,6 +25,7 @@ export default new Vuex.Store({
     isLogin: (state) => state.token ? true: false,
     authHeader: (state) => ({Authorization: `Token ${state.token}`}),
     articles: (state) => state.articles,
+    reviews: (state) => state.reviews,
   },
   mutations: {
     // signup & login -> 완료하면 토큰 발급
@@ -123,14 +124,16 @@ export default new Vuex.Store({
           })
     },
 
-    getReviews(context) {
+    getReviews(context, movie_id) {
+        const movieId = movie_id
         axios({
           method: 'get',
-          url: `${API_URL}/movies/review/`,
+          url: `${API_URL}/movies/review/${movieId}/`,
           headers: context.getters.authHeader
         })
           .then((res) => {
             context.commit('GET_REVIEWS', res.data)
+            console.log(res.data, '이거나옴?')
           })
           .catch((err) => {
             console.log(err)

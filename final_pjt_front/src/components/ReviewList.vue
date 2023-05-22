@@ -23,6 +23,10 @@ export default {
     reviews() {
       return this.$store.state.reviews
     },
+  },
+  created() {
+    console.log(this.$route.params.pk, '####')
+    this.$store.dispatch('getReviews', this.$route.params.pk)
   }
 }
 </script>

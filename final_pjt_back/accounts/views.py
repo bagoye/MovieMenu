@@ -27,3 +27,11 @@ def follow(request, username):
 
     serializer = ProfileSerializer(profile) 
     return Response(serializer.data)
+
+@api_view(['GET'])
+def get_my_profile(request):
+    me = request.user
+    profile = me.profile
+
+    serializer = ProfileSerializer(profile)
+    return Response(serializer.data)

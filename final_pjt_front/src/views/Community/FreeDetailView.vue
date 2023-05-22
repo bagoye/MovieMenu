@@ -1,11 +1,16 @@
 <template>
   <div>
-    <h1>FreeDetailView</h1>
-    <p>글 번호 : {{ article?.id }}</p>
-    <p>제목 : {{ article?.title }}</p>
-    <p>내용 : {{ article?.content }}</p>
-    <p>작성시간 : {{ article?.created_at }}</p>
-    <p>수정시간 : {{ article?.updated_at }}</p>
+    <div>
+      <h1>FreeDetailView</h1>
+      <p>글 번호 : {{ article?.id }}</p>
+      <p>제목 : {{ article?.title }}</p>
+      <p>내용 : {{ article?.content }}</p>
+      <p>작성시간 : {{ article?.created_at }}</p>
+      <p>수정시간 : {{ article?.updated_at }}</p>
+    </div>
+    <div>
+      <button @click="articleDelete">삭제</button>
+    </div>
   </div>
 </template>
 
@@ -36,7 +41,11 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+    },
+    articleDelete() {
+      
     }
+    
   }
 }
 </script>
