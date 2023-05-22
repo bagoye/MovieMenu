@@ -19,6 +19,7 @@ export default new Vuex.Store({
     userInfo: null,
     articles: [],
     reviews: [],
+    resultMovie: null,
 
   },
   getters: {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     authHeader: (state) => ({Authorization: `Token ${state.token}`}),
     articles: (state) => state.articles,
     reviews: (state) => state.reviews,
+    getResultMovie(state) {
+      return state.resultMovie
+    }
   },
   mutations: {
     // signup & login -> 완료하면 토큰 발급
@@ -41,13 +45,24 @@ export default new Vuex.Store({
     GET_REVIEWS(state, reviews) {
       state.reviews = reviews
     },
+    GET_ARTICLES_TOGETHER(state, articlesTogether) {
+      state.articlesTogether = articlesTogether
+    },
     DELETE_ARTICLE(state, article) {
       const index = state.articles.findIndex(a => a.id === article.id)
       if (index !== -1) {
         state.articles.splice(index, 1)
       }
     },
-
+    DELETE_ARTICLE_TOGETHER(state, articlesTogether) {
+      const index = state.articlesTogether.findIndex(a => a.id === articlesTogether.id)
+      if (index !== -1) {
+        state.articlesTogether.splice(index, 1)
+      }
+    },
+    setResultMovie(state, movie) {
+      state.resultMovie = movie
+    },
   },
   actions: {
     signUp(context, data) {
@@ -129,6 +144,21 @@ export default new Vuex.Store({
             console.log('get에서 오류남!!!!')
           })
     },
+    getArticlesTogether(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/community/together/`,
+        headers: context.getters.authHeader
+      })
+        .then((res) => {
+          context.commit('GET_ARTICLES_TOGETHER', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+          console.log('TOGETHER에 넣는 데이터가 오류남')
+        })
+    },
+
 
     getReviews(context, movie_id) {
         const movieId = movie_id
@@ -146,7 +176,9 @@ export default new Vuex.Store({
             console.log('get에서 오류남!!!!')
           })
     },
-
+    setResultMovie({ commit }, movie) {
+      commit('setResultMovie', movie)
+    },
 
   },
 })

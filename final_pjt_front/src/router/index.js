@@ -15,7 +15,10 @@ import CommunityView from '../views/Community/CommunityView'
 import FreeCommunityView from '../views/Community/FreeCommunityView'
 import TogetherCommunityView from '../views/Community/TogetherCommunityView'
 import FreeCreateView from '../views/Community/FreeCreateView'
+import TogetherCreateView from '../views/Community/TogetherCreateView'
 import FreeDetailView from '../views/Community/FreeDetailView'
+import TogetherDetailView from '../views/Community/TogetherDetailView'
+
 
 // 로그인 관련
 import LoginView from '../views/Accounts/LoginView'
@@ -95,7 +98,6 @@ const routes = [
     name: 'ProfileView',
     component: ProfileView,
   },
-
   // community
   {
     path: '/community',
@@ -106,6 +108,12 @@ const routes = [
         path: '/together',
         name: 'TogetherCommunityView',
         component: TogetherCommunityView
+      },
+      //
+      {
+        path: '/togethercreate',
+        name: 'TogetherCreateView',
+        component: TogetherCreateView
       },
       {
         path: '/free',
@@ -124,7 +132,12 @@ const routes = [
     name: 'FreeDetailView',
     component: FreeDetailView
   },
-
+  //
+  {
+    path: '/together/:togetherpk',
+    name: 'TogetherDetailView',
+    component: TogetherDetailView
+  },
 
 
   // 404 not found

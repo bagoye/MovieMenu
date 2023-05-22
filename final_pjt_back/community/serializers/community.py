@@ -26,13 +26,23 @@ class FreeArticleSerializer(serializers.ModelSerializer):
         read_only_fields = ('user', 'like_users',)
 
 
-class TogetherArticleSerializer(serializers.ModelSerializer):
+class TogetherArticleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = TogetherArticle
         fields = '__all__'
-            
+        # read_only_fields = ('movie')
+
 class TogetherCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TogetherComment
         fields = '__all__'
+        # read_only_fields = ('article',)
+
+class TogetherArticleSerializer(serializers.ModelSerializer):
+    comment_set = FreeCommentSerializer(many=True, read_only=True)
+    comment_count = serializers.IntegerField(source='comment_set.count', read_only=True)
+    class Meta:
+        model = TogetherArticle
+        fields = '__all__'
+        read_only_fields = ('user', 'like_users',)
