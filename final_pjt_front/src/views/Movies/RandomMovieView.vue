@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="random-movie">
     <div class="menu-out">
       <div class="menu-in">
-        <h1>카드를 눌러주세요!</h1>
+        <h1 class="mt-5">오늘의 추천 메뉴</h1>
         <div>
           <div @click="pickOneMovie" class="cardbox">
             <img v-if="pickOne" :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${pickOne.poster_path}`" class="card-img-top" alt="...">
@@ -70,4 +70,5 @@ export default {
   height: 600px;
   background-color: #ccc;
 }
+
 </style>

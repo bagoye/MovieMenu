@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <h1>영화를 함께 할 사람은 ?!!?</h1>
+  <div class="choose-view">
+    <div class="menu-out">
+      <div class="menu-in">
+        <h1 class="mt-5">오늘 나와 함께 할 사람은?</h1>
 
-    <div>
-      <button @click="toAloneMovieView">혼자</button>
-      <button @click="toLoverMovieView">연인과</button>
-      <button @click="toFriendMovieView">친구들과</button>
-      <button @click="toFamilyMovieView">가족들과</button>
+        <div class="mt-2">
+          <button @click="toAloneMovieView" class="btn-com1 btn-hover">혼자만의 시간을 갖고 싶어요!</button>
+          <button @click="toLoverMovieView" class="btn-com1 btn-hover">연인과 함께 시간을 보낼래요!</button>
+          <button @click="toFriendMovieView" class="btn-com1 btn-hover">친구와 함께 시간을 보낼래요!</button>
+          <button @click="toFamilyMovieView" class="btn-com1 btn-hover">가족과 함께 시간을 보낼래요!</button>
+        </div>
+      </div>
     </div>
-      선택하면 선택한 테마의 영화 추천 페이지 (ChooseMovieView) 로 넘어감
-      
   </div>
 </template>
 
@@ -34,43 +36,13 @@ export default {
 </script>
 
 <style>
-
-</style>
-
-
-
-<!-- <template>
-  <div>
-    <h1>영화를 함께 할 사람은 ?!!?</h1>
-
-    <div>
-      <button @click="toChooseMovieView('alone')">혼자</button>
-      <button @click="toChooseMovieView('lover')">연인과</button>
-      <button @click="toChooseMovieView('friend')">친구들과</button>
-      <button @click="toChooseMovieView('family')">가족들과</button>
-    </div>
-      선택하면 선택한 테마의 영화 추천 페이지 (ChooseMovieView) 로 넘어감
-      
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'ChooseView',
-  methods: {
-    toChooseMovieView(person) {
-      this.$router.push({
-        name: 'ChooseMovieView',
-        params: {
-          person: person
-        }
-      })
-    }
-  }
+.choose-view {
+  width: 100%;
+  text-align: center;
 }
-</script>
 
-<style>
-
-</style> -->
-
+.btn-hover:hover {
+  background-color: #2E8ADF;
+  color: #fff;
+}
+</style>

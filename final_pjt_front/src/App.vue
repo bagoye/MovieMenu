@@ -1,33 +1,41 @@
 <template>
-  <div id="app">
-    <nav>
-      <img src="./assets/dayoungsuyeom.png" class="logo-img" alt="logo" @click="toHome">
+  <div id="app" class="row mx-auto" style="max-width: 95%;">
+    <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <img src="./assets/dayoungsuyeom.png" class="logo-img navbar-brand" alt="logo" @click="toHome">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-      <div class="nav-link">
-        <router-link :to="{name: 'HomeView'}" exact-active-class="active-link">홈</router-link>
-        <router-link :to="{name: 'RandomMovieView'}" exact-active-class="active-link">오늘의 추천</router-link>
-        <router-link :to="{name: 'CommunityView'}" exact-active-class="active-link">커뮤니티</router-link>
-        <span v-if="isLogin">
-          <!-- 로그인 되어있을 때 -->
-          <a href="#" @click.prevent="logout">로그아웃</a>
-          <router-link :to="{
-            name: 'ProfileView',
-            params: {'userid': user}}">
-            <img src="#" alt="profile image">
-          </router-link>
-        </span>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="nav-link">
+          <router-link :to="{name: 'HomeView'}" exact-active-class="active-link">홈</router-link>
+          <router-link :to="{name: 'RandomMovieView'}" exact-active-class="active-link">오늘의 추천</router-link>
+          <router-link :to="{name: 'CommunityView'}" exact-active-class="active-link">커뮤니티</router-link>
+          <span v-if="isLogin">
+            <!-- 로그인 되어있을 때 -->
+            <a href="#" @click.prevent="logout">로그아웃</a>
+            <router-link :to="{
+              name: 'ProfileView',
+              params: {'userid': user}}"
+              exact-active-class="active-link">
+              마이페이지
+            </router-link>
+          </span>
 
-        <span v-if="!isLogin">
-          <!-- 로그인 되어있지 않을 때 -->
-          <router-link :to="{name: 'LoginView'}" exact-active-class="active-link">로그인</router-link>
-        </span>
-       </div>
+          <span v-if="!isLogin">
+            <!-- 로그인 되어있지 않을 때 -->
+            <router-link :to="{name: 'LoginView'}" exact-active-class="active-link">로그인</router-link>
+          </span>
+        </div>
+      </div>
+    </div>
 
     </nav>
 
     <!-- divide-block == 위에 여백주기 위해서 (nav랑 content 겹침 방지) 수정해야됨 -->
     <div class="divide-block"></div>
-    <router-view/>
+    <router-view class="col-12 mx-auto" style="max-width: 1094px;"/>
   </div>
 </template>
 
@@ -71,14 +79,14 @@ body {
   background-color: #FFFBEF;
 }
 
-#app {
+/* #app {
   width: 1094px;
   margin: 0 auto;
-}
+} */
 
 h1 {
   font-size: 32px;
-  font-weight: bold; /* 800 */
+  font-weight: bold;
 }
 
 .logo-img {
@@ -87,7 +95,6 @@ h1 {
 }
 
 nav {
-  width: 1094px;
   height: 150px;
   display: flex;
   align-items: center;
@@ -130,5 +137,15 @@ nav {
   height: 36px;
   background-color: #ccc;
   border-radius: 50%;
+}
+
+
+/* 스크롤바 없애기 */
+body{
+ -ms-overflow-style: none;
+ }
+ 
+::-webkit-scrollbar {
+  display: none;
 }
 </style>

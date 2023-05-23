@@ -2,10 +2,10 @@
   <div class="home-view">
     <div class="menu-out">
       <div class="menu-in">
-        <h1 class="h1-tag">오늘의 밥 친구를 찾아서 가보자굿 -0- ;;;;; ;; bb</h1>
+        <h1 class="mt-5">오늘의 밥 친구를 추천해드릴게요!</h1>
         <div>
-          <button @click="toChooseView" class="btn-com1 btn-blue">오늘의 밥친구는 ?! 얘는 로그인 했을 때만 가능</button>
-          <button @click="toNormalMovieView" class="btn-com1">로그인 안해도 상관 X => 개무난한 추천페이지</button>
+          <button @click="toChooseView" class="btn-com1 btn-blue">오늘의 밥 친구를 추천 받을래요!</button>
+          <button @click="toNormalMovieView" class="btn-com1">카테고리별 추천을 받고 싶어요!</button>
         </div>
       </div>
     </div>
@@ -72,6 +72,10 @@ export default {
 }
 .btn-blue {
   background-color: #2E8ADF;
-  color: #fff;
+  color: #fff;  
+}
+
+button:hover {
+  font-weight: bold;
 }
 </style>
