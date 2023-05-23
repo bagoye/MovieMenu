@@ -18,9 +18,13 @@ export default new Vuex.Store({
     token: null,
     userInfo: null,
     articles: [],
-    reviews: [],
+    // reviews: [],
     selectMovie: null,
 
+    // 리뷰떄문에 추가한 내용 =====================================================
+    movies: [], // 영화 목록을 저장할 배열 추가
+    reviews: [],
+    // ========================================================================== 
   },
   getters: {
     isLogin: (state) => state.token ? true: false,
@@ -61,10 +65,20 @@ export default new Vuex.Store({
       }
     },
     SET_RESULT_MOVIE(state, movie) {
-      // state.resultMovie.push(movie)
-      // state.resultMovie = [...state.resultMovie, movie]
       state.selectMovie = movie
     },
+
+    // 리뷰때문에 추가한 내용들 ================================================
+    SET_MOVIES(state, movies) {
+      state.movies = movies;
+    },
+    ADD_REVIEW(state, { movieId, review }) {
+      const movie = state.movies.find((movie) => movie.id === movieId);
+      if (movie) {
+        movie.reviews.push(review);
+      }
+    },
+    // =======================================================================
   },
   actions: {
     signUp(context, data) {
@@ -160,10 +174,9 @@ export default new Vuex.Store({
           console.log('TOGETHER에 넣는 데이터가 오류남')
         })
     },
-
-
     getReviews(context, movie_id) {
         const movieId = movie_id
+        context.commit('GET_REVIEWS', []); // 이전 리뷰 목록 초기화
         axios({
           method: 'get',
           url: `${API_URL}/movies/review/${movieId}/`,
@@ -182,6 +195,21 @@ export default new Vuex.Store({
       commit('SET_RESULT_MOVIE', movie)
     },
 
+    // 리뷰때문에 추가한 내용 ==============================================
+    getMovies({ commit }) {
+      axios.get(`${API_URL}/movies/`)
+        .then((response) => {
+          commit('SET_MOVIES', response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  
+    addReviewToMovie({ commit }, { movieId, review }) {
+      commit('ADD_REVIEW', { movieId, review });
+    },
+    // ====================================================================
   },
 })
 

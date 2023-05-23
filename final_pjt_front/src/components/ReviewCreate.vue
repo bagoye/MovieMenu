@@ -32,14 +32,15 @@ export default {
     createReview() {
       const content = this.content
       const score = parseFloat(this.score)
+      // const routeParamsPk = this.$route.params.pk
       const routeParamsPk = this.$route.params.pk
 
       if (!content) {
-        alert('내용 입력해주세요')
+        alert('내용을 입력해주세요')
         return
       }
       else if (!score){
-        alert('평점 입력해주세요')
+        alert('평점을 입력해주세요')
         return
       }
 
@@ -52,15 +53,16 @@ export default {
           Authorization: `Token ${this.$store.state.token}`
         }
       })
-      .then(() => { 
-        console.log('안녕하세요?')
-        console.log(this.content, this.score)
-        this.$router.push({name: 'MovieDetailView', params: { pk: routeParamsPk }}).catch(() => {})
+      .then((response) => {
+        const review = response.data;
+        this.$store.dispatch('addReviewToMovie', { movieId: routeParamsPk, review });
+        this.content = null;
+        this.score = null;
+        this.$store.dispatch('getReviews', routeParamsPk);
+        // this.$router.replace({ name: 'MovieDetailView', params: { pk: routeParamsPk } }).catch(() => {});
       })
       .catch((err) => {
         console.log(err)
-        console.log('안된다고ㅡㅡ')
-        console.log(routeParamsPk)
       })
     }
   }
