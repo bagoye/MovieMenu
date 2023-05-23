@@ -41,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getResultMovie'])
+    ...mapGetters(['selectMovie'])
   },
   created() {
     axios({
@@ -63,7 +63,7 @@ export default {
       const article = {
         title: this.title,
         content: this.content,
-        movie: this.resultMovie // 영화 정보를 게시글에 추가
+        movie_id: this.selectMovie.id // 영화 정보를 게시글에 추가
       };
 
       if (!title) {
@@ -89,13 +89,15 @@ export default {
         article.searchResult = this.searchResult;
         this.$store.commit('ADD_ARTICLE_TOGETHER', article); // Vuex에 게시글 추가
         this.$router.push({ name: 'TogetherCommunityView' });
+        console.log(article.id)
+        console.log(article, '==========================')
       })
       .catch((err) => {
         console.log(err)
         console.log('같이봐욥 post에서 오류 발생')
       })
     },
-    async searchMovie() {
+    searchMovie() {
       if (this.movies && this.search) {
         this.searchResult = this.movies.filter((movie) =>
           movie.title.includes(this.search)

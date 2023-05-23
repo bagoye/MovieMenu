@@ -19,7 +19,7 @@ export default new Vuex.Store({
     userInfo: null,
     articles: [],
     reviews: [],
-    resultMovie: null,
+    selectMovie: null,
 
   },
   getters: {
@@ -27,8 +27,8 @@ export default new Vuex.Store({
     authHeader: (state) => ({Authorization: `Token ${state.token}`}),
     articles: (state) => state.articles,
     reviews: (state) => state.reviews,
-    getResultMovie(state) {
-      return state.resultMovie
+    selectMovie(state) {
+      return state.selectMovie
     }
   },
   mutations: {
@@ -60,8 +60,10 @@ export default new Vuex.Store({
         state.articlesTogether.splice(index, 1)
       }
     },
-    setResultMovie(state, movie) {
-      state.resultMovie = movie
+    SET_RESULT_MOVIE(state, movie) {
+      // state.resultMovie.push(movie)
+      // state.resultMovie = [...state.resultMovie, movie]
+      state.selectMovie = movie
     },
   },
   actions: {
@@ -177,7 +179,7 @@ export default new Vuex.Store({
           })
     },
     setResultMovie({ commit }, movie) {
-      commit('setResultMovie', movie)
+      commit('SET_RESULT_MOVIE', movie)
     },
 
   },

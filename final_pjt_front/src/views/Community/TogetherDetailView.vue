@@ -7,10 +7,15 @@
       <p>내용 : {{ article?.content }}</p>
       <p>작성시간 : {{ article?.created_at }}</p>
       <p>수정시간 : {{ article?.updated_at }}</p>
-      <p>영화제목: {{ resultMovie ? resultMovie.title : '' }}</p>
-      <p>영화 포스터: {{ resultMovie ? resultMovie.poster_path : '' }}</p>
-      <!-- <p v-if="resultMovie">영화제목: {{ resultMovie.title }}</p>
-      <p v-if="resultMovie">영화 포스터: {{ resultMovie.poster_path }}</p> -->
+      <div>
+        <p>영화제목 : {{ getMovie[0].title }} </p>
+        <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${getMovie[0].poster_path}`">
+        <p>줄거리 : {{ getMovie[0].overview }}</p>
+        <p>평점 : {{ getMovie[0].vote_average }}</p>
+        <p>런타임 : {{ getMovie[0].runtime }}분</p>
+      </div>
+      <!-- article?.movie는 movie의 id -->
+      <!-- <p> {{ allMovies }}</p> -->
     </div>
     <div v-if="isEditMode">
       <input v-model="editedTitle" placeholder="수정할 제목" />
@@ -35,21 +40,38 @@ export default {
   name: 'TogetherDetailView',
   data() {
     return {
+      allMovies: null,
       article: null,
       editedTitle: '', // 수정된 제목을 저장하는 변수
       editedContent: '', // 수정된 내용을 저장하는 변수
       isEditMode: false,
+
+      getMovie: null,
     }
   },
   created() {
     this.getTogetherArticleDetail()
-    this.getResultMovie(); // 영화 정보 가져오기 추가
-    // this.resultMovie = this.article.searchResult
+    
+    axios({
+      method: 'get',
+      url: `http://127.0.0.1:8000/movies/allmovie/`,
+    })
+    .then(res => {
+      console.log(res)
+      this.allMovies = res.data
+      this.searchResultMovie()
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+    // this.searchResultMovie()
+    
   },
   computed: {
-    ...mapGetters(['getResultMovie']),
+    ...mapGetters(['selectMovie']),
     resultMovie() {
-      return this.$store.getters.getResultMovie;
+      return this.$store.getters.selectMovie;
     }
   },
   methods: {
@@ -63,7 +85,7 @@ export default {
         this.article = res.data
         this.editedTitle = res.data.title // 초기 제목 설정
         this.editedContent = res.data.content // 초기 내용 설정
-        this.setResultMovie(res.data.movie); // 영화 정보 설정
+        this.selectMovie(res.data); // 영화 정보 설정
       })
       .catch((err) => {
         console.log(err)
@@ -128,6 +150,15 @@ export default {
     },
     cancelEdit() {
       this.isEditMode = false
+    },
+
+    //
+    searchResultMovie() {
+    if (this.allMovies && this.article) {
+      this.getMovie = this.allMovies.filter((movie) =>
+        movie.id === this.article.movie
+        );
+      }
     },
   },
 }

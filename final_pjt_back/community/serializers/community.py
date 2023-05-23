@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from community.models import TogetherArticle, TogetherComment, FreeArticle, FreeComment
 from django.contrib.auth import get_user_model
-
+from movies.serializers.movie import MovieListSerializer
 # User = get_user_model()
 
 class FreeArticleListSerializer(serializers.ModelSerializer):
@@ -40,6 +40,7 @@ class TogetherCommentSerializer(serializers.ModelSerializer):
         # read_only_fields = ('article',)
 
 class TogetherArticleSerializer(serializers.ModelSerializer):
+    movie = MovieListSerializer(read_only=True)
     comment_set = FreeCommentSerializer(many=True, read_only=True)
     comment_count = serializers.IntegerField(source='comment_set.count', read_only=True)
     class Meta:
