@@ -1,5 +1,11 @@
 <template>
   <div>
+    <!-- 로딩중 빙글빙글 -->
+    <div class="spinner-border text-primary" role="status" v-if="movies === null">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+
+
     <span class="movieKeyword" v-if="keyword === 'popular'">인기순</span>
     <span class="movieKeyword" v-else-if="keyword === 'voteaverage'">평점 높은 순</span>
     <span class="movieKeyword" v-else-if="keyword === 'adventure'">모험</span>

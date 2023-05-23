@@ -47,28 +47,28 @@ export default {
 
 .menu-out {
   width: 100%;
-  height: 600px;
+  min-height: calc(100vh - 150px);
   background-color: #D6E7F6;
   border-radius: 20px 20px 0 0;
   position: relative;
 }
 .menu-in {
   width: 90%;
-  height: 100%;
+  height: calc(100% - 50px);
   position: absolute;
   left: 5%;
-  top: 40px;
+  top: 50px;
   border-radius: 20px 20px 0 0;
   background-color: #fff;
 }
 
 .btn-com1 {
   width: 72%;
-  height: 100px;
+  height: 48px;
   border-radius: 10px;
   border: none;
-  margin-top: 20px;
-  font-size: 24px;
+  margin-top: 10px;
+  font-size: 16px;
 }
 .btn-blue {
   background-color: #2E8ADF;

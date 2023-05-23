@@ -3,19 +3,20 @@
     <div class="menu-out">
       <div class="menu-in">
         <h1 class="mt-5">오늘의 추천 메뉴</h1>
-        <div>
+        <div class="mt-5">
           <div @click="pickOneMovie" class="cardbox">
             <img v-if="pickOne" :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${pickOne.poster_path}`" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">{{ pickOne.title }}</h5>
-            </div>
+            <span v-if="pickOne === ''" class="click-txt">클릭해주세요</span>
           </div>
-          <span>클릭해주세요</span>
         </div>
-        <div>
-          <h2>영화 제목</h2>
-          <span>영화 설명해주는 것 100자로 해두고?! 이제 암튼... 오켕이</span>
-          <div>
+
+        <div class="right-info">
+          <div class="movie-info">
+            <h2>{{ pickOne.title }}</h2>
+            <div>{{ pickOne.overview }}</div>
+            <div>{{ pickOne.runtime }}</div>
+          </div>
+          <div class="movie-btn">
             <button>이 영화로 할게요</button>
             <button @click="pickOneMovie">다시 뽑을래요</button>
           </div>
@@ -65,10 +66,27 @@ export default {
 </script>
 
 <style>
+.random-movie {
+  text-align: center;
+}
+
 .cardbox {
-  width: 400px;
-  height: 600px;
-  background-color: #ccc;
+  cursor: pointer;
+  width: 300px;
+  margin: 0 auto;
+  height: 450px;
+  border-radius: 10px;
+  background-color: #D6E7F6;
+
+  overflow: hidden;
+}
+
+.cardbox:hover {
+  background-color: #c0dbf3;
+}
+
+.click-txt {
+  line-height: 450px;
 }
 
 </style>

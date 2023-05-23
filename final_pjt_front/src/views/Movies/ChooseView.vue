@@ -4,7 +4,7 @@
       <div class="menu-in">
         <h1 class="mt-5">오늘 나와 함께 할 사람은?</h1>
 
-        <div class="mt-2">
+        <div class="mt-4">
           <button @click="toAloneMovieView" class="btn-com1 btn-hover">혼자만의 시간을 갖고 싶어요!</button>
           <button @click="toLoverMovieView" class="btn-com1 btn-hover">연인과 함께 시간을 보낼래요!</button>
           <button @click="toFriendMovieView" class="btn-com1 btn-hover">친구와 함께 시간을 보낼래요!</button>
