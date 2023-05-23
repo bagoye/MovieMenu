@@ -15,5 +15,7 @@ urlpatterns = [
     path('<int:movie_pk>/', views.movie_detail),
 
     path('review/<int:movie_pk>/', views.movie_review),
-    # path('review/', views.movie_review),
+
+    # 삭제, 수정하려고 추가한 코드
+    path('review/<int:movie_pk>/<int:review_pk>/', views.movie_review_detail),
 ]

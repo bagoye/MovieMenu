@@ -33,7 +33,7 @@ export default new Vuex.Store({
     reviews: (state) => state.reviews,
     selectMovie(state) {
       return state.selectMovie
-    }
+    },
   },
   mutations: {
     // signup & login -> 완료하면 토큰 발급
@@ -78,7 +78,27 @@ export default new Vuex.Store({
         movie.reviews.push(review);
       }
     },
-    // =======================================================================
+    // 리뷰 수정, 삭제때문에 추가=========================================
+    UPDATE_REVIEW(state, { movieId, review }) {
+      const movie = state.movies.find((movie) => movie.id === movieId);
+      if (movie) {
+        const index = movie.reviews.findIndex((r) => r.id === review.id);
+        if (index !== -1) {
+          movie.reviews.splice(index, 1, review);
+        }
+      }
+    },
+
+    DELETE_REVIEW(state, { movieId, reviewId }) {
+      const movie = state.movies.find((movie) => movie.id === movieId);
+      if (movie) {
+        const index = movie.reviews.findIndex((r) => r.id === reviewId);
+        if (index !== -1) {
+          movie.reviews.splice(index, 1);
+        }
+      }
+    },
+    // ======================================================
   },
   actions: {
     signUp(context, data) {
@@ -205,12 +225,36 @@ export default new Vuex.Store({
           console.error(error);
         });
     },
-  
+    
     addReviewToMovie({ commit }, { movieId, review }) {
       commit('ADD_REVIEW', { movieId, review });
     },
+    // 리뷰 수정, 삭제때문에 추가한 코드========================================
+    updateReview({ commit, getters }, { movieId, reviewId, reviewData }) {
+      axios
+        .put(`${API_URL}/movies/review/${movieId}/${reviewId}/`, reviewData, {
+          headers: getters.authHeader,
+        })
+        .then((response) => {
+          commit('UPDATE_REVIEW', { movieId, review: response.data });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+
+    deleteReview({ commit, getters }, { movieId, reviewId }) {
+      axios
+        .delete(`${API_URL}/movies/review/${movieId}/${reviewId}/`, {
+          headers: getters.authHeader,
+        })
+        .then(() => {
+          commit('DELETE_REVIEW', { movieId, reviewId });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     // ====================================================================
-  },
+  }
 })
-
-
