@@ -1,12 +1,12 @@
 <template>
   <div>
     <div>
-      <p>TogetherCommentList</p>
+      <p>FreeCommentList</p>
       <div v-for="comment in comments" :key="comment.id">
         <CommentListItem :comment="comment" />
       </div>
     </div>
-    <TogetherCommentForm @comment-posted="refreshComments" />
+    <FreeCommentForm @comment-posted="refreshComments" />
   </div>
 </template>
 
@@ -15,13 +15,13 @@ import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000'
 
 import CommentListItem from '@/components/CommentListItem' // CommentListItem 컴포넌트 import
-import TogetherCommentForm from '@/components/TogetherCommentForm' // CommentForm 컴포넌트 import
+import FreeCommentForm from '@/components/FreeCommentForm' // CommentForm 컴포넌트 import
 
 export default {
-  name: 'TogetherCommentList',
+  name: 'FreeCommentList',
   components: {
     CommentListItem, // CommentListItem 컴포넌트 등록
-    TogetherCommentForm // CommentForm 컴포넌트 등록
+    FreeCommentForm // CommentForm 컴포넌트 등록
   },
   data() {
     return {
@@ -29,13 +29,13 @@ export default {
     }
   },
   created() {
-    this.getTogetherComments()
+    this.getFreeComments()
   },
   methods: {
-    getTogetherComments() {
+    getFreeComments() {
       axios({
         method: 'get',
-        url: `${API_URL}/community/together/${this.$route.params.togetherpk}/comment/`,
+        url: `${API_URL}/community/free/${this.$route.params.freepk}/comment/`,
         headers: {
           Authorization: `Token ${this.$store.state.token}`
         }
@@ -49,7 +49,7 @@ export default {
         })
     },
     refreshComments() {
-      this.getTogetherComments()
+      this.getFreeComments()
     }
   }
 }

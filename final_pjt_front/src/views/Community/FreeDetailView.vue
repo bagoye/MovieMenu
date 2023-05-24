@@ -18,16 +18,20 @@
       <button @click="toggleEditMode">수정</button>
       <button @click="articleDelete">삭제</button>
     </div>
+    <FreeCommentList/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-
+import FreeCommentList from '@/components/FreeCommentList'
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'FreeDetailView',
+  components: {
+    FreeCommentList
+  },
   data() {
     return {
       article: null,

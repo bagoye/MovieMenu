@@ -111,7 +111,7 @@ def movie_detail(request, movie_pk):
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def movie_review(request, movie_pk,):
+def movie_review(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
 
     if request.method == 'GET':

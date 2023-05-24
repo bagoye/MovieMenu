@@ -96,3 +96,39 @@ def together_detail(request, article_pk):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+
+# together_comment 작성
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def together_comment(request, article_pk):
+    togetherarticle = get_object_or_404(TogetherArticle, pk=article_pk)
+
+    if request.method == 'GET':
+        togethercomments = togetherarticle.comments_together.all()
+        serializer = TogetherCommentSerializer(togethercomments, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = TogetherCommentSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, article=togetherarticle)  # 수정된 부분
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+# free_comment
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def free_comment(request, article_pk):
+    freearticle = get_object_or_404(FreeArticle, pk=article_pk)
+
+    if request.method == 'GET':
+        togethercomments = freearticle.comments_free.all()
+        serializer = FreeCommentSerializer(togethercomments, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = FreeCommentSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, article=freearticle)  # 수정된 부분
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
