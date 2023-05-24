@@ -141,3 +141,19 @@ def movie_review_detail(request, movie_pk, review_pk):
     elif request.method == 'DELETE':
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+# 좋아요
+@api_view(['POST'])
+def movie_like(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    user = request.user
+    if movie.like_users.filter(pk=user.pk).exists():
+        movie.like_users.remove(user)
+        is_like = False
+    else:
+        movie.like_users.add(user)
+        is_like = True
+    response = { 
+        'isLike': is_like, 
+        'likeCount': movie.like_users.count() }
+    return JsonResponse(response)

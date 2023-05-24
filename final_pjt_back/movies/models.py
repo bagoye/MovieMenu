@@ -28,8 +28,7 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, related_name="movies")
     genres = models.ManyToManyField(Genre, related_name="movies")
     directors = models.ManyToManyField(Director, related_name="movies")
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL)
-
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
 
 
 class MovieActors(models.Model):
@@ -48,7 +47,3 @@ class MovieReview(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     score = models.FloatField()
-
-class ReviewLike(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='review_likes')
-    movie_review = models.ForeignKey(MovieReview, on_delete=models.CASCADE)

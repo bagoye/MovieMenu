@@ -27,17 +27,24 @@
       <button @click="toggleEditMode">수정</button>
       <button @click="togetherArticleDelete">삭제</button>
     </div>
+    <div>
+      <TogetherCommentList/>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+import TogetherCommentList from '@/components/TogetherCommentList'
 
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'TogetherDetailView',
+  components: {
+    TogetherCommentList
+  },
   data() {
     return {
       allMovies: null,

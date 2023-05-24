@@ -4,11 +4,7 @@
 
     <div>{{ user.pk }}</div>
     <div>{{ user.username }}</div>
-    <div>{{ user.email }}</div>
-    <div class="followers">
-      팔로잉 :
-      팔로워 :
-    </div>
+    
   </div>
 </template>
 

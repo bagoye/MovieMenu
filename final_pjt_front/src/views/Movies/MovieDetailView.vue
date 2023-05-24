@@ -16,6 +16,10 @@
         {{ actor.name }}
       </div>
     <p>줄거리: {{ movie?.overview }} </p>
+    <button @click="toggleLike" :class="{ 'liked': movie?.liked }">
+      {{ movie?.liked ? '좋아요 취소' : '좋아요' }}
+    </button>
+
     <div class="review-list">
       <ReviewList />
     </div>
@@ -34,8 +38,6 @@ export default {
   data() {
     return {
       movie: null,
-      actors: null,
-      directors: null
     }
   },
   created() {
@@ -50,8 +52,21 @@ export default {
         url: `http://127.0.0.1:8000/movies/${this.$route.params.pk}/`
       })
       .then((res) => {
-        console.log(res)
+        console.log(res.data)
         this.movie = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    toggleLike() {
+      axios({
+        method: 'post',
+        url: `http://127.0.0.1:8000/movies/${this.$route.params.pk}/like/`
+      })
+      .then((res) => {
+        console.log(res)
+        this.movie.liked = res.data.isLike
       })
       .catch((err) => {
         console.log(err)
@@ -60,3 +75,10 @@ export default {
   },
 }
 </script>
+
+<style>
+.liked {
+  color: red;
+  font-weight: bold;
+}
+</style>

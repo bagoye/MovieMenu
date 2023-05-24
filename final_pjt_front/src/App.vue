@@ -14,13 +14,13 @@
             <router-link :to="{name: 'CommunityView'}" exact-active-class="active-link">커뮤니티</router-link>
             <span v-if="isLogin">
               <!-- 로그인 되어있을 때 -->
-              <a href="#" @click.prevent="logout">로그아웃</a>
               <router-link :to="{
                 name: 'ProfileView',
                 params: {'userid': user}}"
                 exact-active-class="active-link">
                 마이페이지
               </router-link>
+              <a href="#" @click.prevent="logout">로그아웃</a>
             </span>
 
             <span v-if="!isLogin">
@@ -32,9 +32,12 @@
       </div>
     </nav>
 
-    <!-- divide-block == 위에 여백주기 위해서 (nav랑 content 겹침 방지) 수정해야됨 -->
+    <!-- divide-block == 위에 여백 (nav랑 content 겹침 방지) -->
     <div class="divide-block"></div>
-    <router-view class="col-12 mx-auto" style="max-width: 1094px;"/>
+
+    <div class="content-wrapper">
+      <router-view class="col-12" :class="{ 'full-width': $route.meta.fullWidth }"/>
+    </div>
   </div>
 </template>
 
@@ -127,5 +130,15 @@ body{
  
 ::-webkit-scrollbar {
   display: none;
+}
+
+/* 필요할 때, bind로 full width on-off */
+.content-wrapper {
+  max-width: 1094px;
+  margin: 0 auto;
+}
+.full-width {
+  max-width: none;
+  left: 0;
 }
 </style>

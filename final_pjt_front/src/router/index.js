@@ -68,7 +68,10 @@ const routes = [
   {
     path: '/normal',
     name: 'NormalMovieView',
-    component: NormalMovieView
+    component: NormalMovieView,
+    meta: {
+      fullWidth: true,
+    },
   },
   {
     path: '/momakase',

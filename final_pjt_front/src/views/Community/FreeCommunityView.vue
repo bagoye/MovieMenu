@@ -5,6 +5,7 @@
       <router-link :to="{name : 'FreeCreateView'}">[CREATE]</router-link>
     </span>
     <ArticleList/>
+    
 
   </div>
 </template>

@@ -17,7 +17,9 @@
             <div>{{ pickOne.runtime }}</div>
           </div>
           <div class="movie-btn">
-            <button>이 영화로 할게요</button>
+            <button @click="likeMovie" > <!-- Added click event and disabled attribute -->
+              {{ pickOne.liked ? '좋아요를 눌렀어요' : '이 영화로 할게요' }}
+            </button>
             <button @click="pickOneMovie">다시 뽑을래요</button>
           </div>
           <div>
@@ -51,6 +53,7 @@ export default {
     .then(res => {
       console.log(res)
       this.movies = res.data
+      // this.pickOne = _.sample(this.movies.map(movie => ({ ...movie, liked: false }))) // Add 'liked' property
     })
     .catch(err => {
       console.log(err)
@@ -58,7 +61,21 @@ export default {
   },
   methods: {
     pickOneMovie() {
-      this.pickOne = _.sample(this.movies)
+      this.pickOne = _.sample(this.movies.map(movie => ({ ...movie, liked: false }))) // Reset 'liked' property
+    },
+    likeMovie() {
+      if (this.pickOne.liked) {
+        this.pickOne.liked = false;
+        const userId = this.$store.state.userInfo.pk;
+        const index = this.pickOne.like_users.indexOf(userId);
+        if (index > -1) {
+          this.pickOne.like_users.splice(index, 1);
+        }
+      } else {
+        this.pickOne.liked = true;
+        const userId = this.$store.state.userInfo.pk;
+        this.pickOne.like_users.push(userId);
+      }
     }
   }
 }

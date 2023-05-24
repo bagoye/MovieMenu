@@ -18,4 +18,7 @@ urlpatterns = [
 
     # 삭제, 수정하려고 추가한 코드
     path('review/<int:movie_pk>/<int:review_pk>/', views.movie_review_detail),
+    
+    # Movie 좋아요 코드
+    path('<int:movie_id>/like/', views.movie_like),
 ]
