@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <h1>Detail</h1>
-    <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${movie?.youtube_key}`" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    <p>제목 : {{ movie?.title }}</p>
+  <div class="movie-detail">
+    <h1 class="movieKeyword">{{ movie?.title }}</h1>
+    <iframe width="100%" height="400px" :src="`https://www.youtube.com/embed/${movie?.youtube_key}`" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    
     <p>평점 : {{ movie?.vote_average }}</p>
     <p>러닝타임 : {{ movie?.runtime }}</p>
     <p>감독 : 

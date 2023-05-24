@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>Choose Movie View</h2>
-    <p>가족과의 시간을 가지고 싶다면</p>
+    <h2 class="movieKeyword my-5">가족과의 시간<span class="light-font">을 가지고 싶다면,</span></h2>
+
     <ChooseItem
     v-for="(genre,index) in genreList" :key="`genre-${index}`"
     :genre="genre"

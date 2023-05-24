@@ -21,5 +21,6 @@ export default {
 <style>
 .img-404 {
     width: 80%;
+    margin-top: 50px;
 }
 </style>

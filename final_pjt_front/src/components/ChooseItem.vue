@@ -1,6 +1,5 @@
 <template>
-  <div>
-    ChooseItem
+  <div class="choose-item col-sm-6 col-lg-4">
     {{ genre }}
 
   </div>

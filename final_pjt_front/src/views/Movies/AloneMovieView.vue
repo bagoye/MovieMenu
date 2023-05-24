@@ -1,11 +1,12 @@
 <template>
   <div>
-    <h2>Choose Movie View</h2>
-    <p>혼자만의 시간을 가지고 싶다면</p>
-    <ChooseItem
-    v-for="(genre,index) in genreList" :key="`genre-${index}`"
-    :genre="genre"
-    />
+    <h2 class="movieKeyword my-5">혼자만의 시간<span class="light-font">을 가지고 싶다면,</span></h2>
+    <div class="genre-lst">
+      <div class="">드라마</div>
+      <div class="">미스터리</div>
+      <div class="">코미디</div>
+      <div class="">판타지</div>
+    </div>
     <ChooseMovieItem
     v-for="(movie, index) in radomMovies" :key="`movie-${index}`"
     :movie="movie"
@@ -17,7 +18,6 @@
 
 <script>
 import _ from 'lodash'
-import ChooseItem from '@/components/ChooseItem'
 import ChooseMovieItem from '@/components/ChooseMovieItem'
 
 import axios from 'axios'
@@ -25,7 +25,6 @@ import axios from 'axios'
 export default {
   name: 'AloneMovieView',
   components: {
-    ChooseItem,
     ChooseMovieItem
   },
   data() {
@@ -59,6 +58,9 @@ export default {
   }
 }
 </script>
+
+<style>
+</style>
 
 <!-- 
 data() {

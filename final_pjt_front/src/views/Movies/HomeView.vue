@@ -66,10 +66,11 @@ export default {
   background-color: #D6E7F6;
   border-radius: 20px 20px 0 0;
   position: relative;
+  overflow: auto;
 }
 .menu-in {
   width: 90%;
-  height: calc(100% - 50px);
+  height: calc(1000px - 50px);
   position: absolute;
   left: 5%;
   top: 50px;
