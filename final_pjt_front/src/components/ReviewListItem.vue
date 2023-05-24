@@ -9,9 +9,9 @@
     <div v-else>
       <form @submit.prevent="submitReview">
         <label for="content">Content:</label>
-        <textarea v-model="updatedReviewData.content" id="content"></textarea>
+        <textarea @keyup.enter="submitReview" v-model="updatedReviewData.content" id="content"></textarea>
         <label for="score">Score:</label>
-        <input v-model="updatedReviewData.score" type="number" id="score" min="1" max="10">
+        <input v-model="updatedReviewData.score" type="number" id="score" min="0" max="5" step="0.5">
         <button type="submit">Submit</button>
         <button @click="cancelEditing">Cancel</button>
       </form>
@@ -57,8 +57,17 @@ export default {
         movieId: this.$route.params.pk,
         reviewId: this.review.id,
         reviewData: this.updatedReviewData,
+      }).then(() => {
+        // 액션이 완료된 후에 데이터를 직접 업데이트합니다.
+        const updatedReviewIndex = this.reviews.findIndex(r => r.id === this.review.id);
+        if (updatedReviewIndex !== -1) {
+          this.$set(this.reviews, updatedReviewIndex, {
+            ...this.reviews[updatedReviewIndex],
+            ...this.updatedReviewData,
+          });
+        }
+        this.cancelEditing();
       });
-      this.cancelEditing();
     },
     deleteReview(review) {
       // 리뷰 삭제 작업 수행
@@ -66,6 +75,12 @@ export default {
       this.$store.dispatch('deleteReview', {
         movieId: this.$route.params.pk,
         reviewId: review.id,
+      }).then(() => {
+        // 액션이 완료된 후에 데이터를 직접 업데이트합니다.
+        const deletedReviewIndex = this.reviews.findIndex(r => r.id === review.id);
+        if (deletedReviewIndex !== -1) {
+          this.reviews.splice(deletedReviewIndex, 1);
+        }
       });
     },
   },

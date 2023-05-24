@@ -4,7 +4,7 @@
     <h1>리뷰 작성하기</h1>
     <form @submit.prevent="createReview">
       <label for="content">내용 : </label>
-      <textarea id="content" cols="30" rows="10" v-model="content"></textarea><br>
+      <textarea @keyup.enter="createReview" id="content" cols="30" rows="10" v-model="content"></textarea><br>
       <label for="score">평점 : </label>
       <input type="number" id="score" min="0" max="5" step="0.5" v-model="score">
       <input type="submit" id="submit">
