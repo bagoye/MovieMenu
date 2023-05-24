@@ -140,14 +140,17 @@ def free_comment(request, article_pk):
 def together_comment_detail(request, article_pk, comment_pk):
     comment = get_object_or_404(TogetherComment, pk=comment_pk, article_id=article_pk)
     if request.method == 'PUT':
+        if comment.user != request.user:    
+            return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = TogetherCommentSerializer(comment, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
-        comment.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if comment.user == request.user:
+            comment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # free_comment 삭제, 수정
@@ -156,11 +159,14 @@ def together_comment_detail(request, article_pk, comment_pk):
 def free_comment_detail(request, article_pk, comment_pk):
     comment = get_object_or_404(FreeComment, pk=comment_pk, article_id=article_pk)
     if request.method == 'PUT':
+        if comment.user != request.user:    
+            return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = FreeCommentSerializer(comment, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
-        comment.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if comment.user == request.user:
+            comment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)

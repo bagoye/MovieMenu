@@ -1,7 +1,7 @@
 <template>
   <div>
     <form @submit.prevent="submitComment">
-      <textarea v-model="commentContent" placeholder="댓글을 작성해주세요"></textarea>
+      <textarea @keyup.enter="submitComment" v-model="commentContent" placeholder="댓글을 작성해주세요"></textarea>
       <button type="submit">작성</button>
     </form>
   </div>

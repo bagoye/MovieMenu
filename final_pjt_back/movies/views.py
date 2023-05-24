@@ -133,15 +133,17 @@ def movie_review(request, movie_pk):
 def movie_review_detail(request, movie_pk, review_pk):
     review = get_object_or_404(MovieReview, pk=review_pk, movie_id=movie_pk)
     if request.method == 'PUT':
+        if review.user != request.user:    
+            return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = MovieReviewSerializer(review, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
-        review.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    
+        if review.user == request.user:
+            review.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
 # 좋아요
 @api_view(['POST'])
 def movie_like(request, movie_id):

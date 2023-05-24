@@ -52,6 +52,12 @@ export default {
       this.getTogetherComments()
     },
     editComment(comment, updatedCommentData) {
+      if (comment.user !== this.$store.state.userInfo?.pk) {
+        // 작성자가 아닌 경우 알림을 띄웁니다.
+        alert("작성자만 수정할 수 있습니다.");
+        return;
+      }
+
       axios({
         method: 'put',
         url: `${API_URL}/community/together/${this.$route.params.togetherpk}/${comment.id}/`,
@@ -75,6 +81,12 @@ export default {
         })
     },
     deleteComment(comment) {
+      if (comment.user !== this.$store.state.userInfo?.pk) {
+        // 작성자가 아닌 경우 알림을 띄웁니다.
+        alert("작성자만 삭제할 수 있습니다.");
+        return;
+      }
+
       axios({
         method: 'delete',
         url: `${API_URL}/community/together/${this.$route.params.togetherpk}/${comment.id}/`,
