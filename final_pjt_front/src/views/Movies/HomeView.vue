@@ -2,7 +2,14 @@
   <div class="home-view">
     <div class="menu-out">
       <div class="menu-in">
-        <h1 class="mt-5">오늘의 밥 친구를 추천해드릴게요!</h1>
+
+        <div class="mt-5">
+          <span v-if="isLogin">
+            <div>어서오세요, {{username}}님!</div>
+          </span>
+          
+          <h1 class="mt-2">오늘의 밥 친구를 추천해드릴게요!</h1>
+        </div>
         <div>
           <button @click="toChooseView" class="btn-com1 btn-blue">오늘의 밥 친구를 추천 받을래요!</button>
           <button @click="toNormalMovieView" class="btn-com1">카테고리별 추천을 받고 싶어요!</button>
@@ -19,6 +26,14 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'HomeView',
+  data() {
+    return {
+      username: null,
+    }
+  },
+  mounted() {
+    this.username = this.$store.state.userInfo.username
+  },
   computed: {
     ...mapGetters(['isLogin'])
   },

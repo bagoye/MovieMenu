@@ -1,21 +1,22 @@
 <template>
-  <div>
+  <div class="normal-list row">
     <!-- 로딩중 빙글빙글 -->
     <div class="spinner-border text-primary" role="status" v-if="movies === null">
       <span class="visually-hidden">Loading...</span>
     </div>
-
-
-    <span class="movieKeyword" v-if="keyword === 'popular'">인기순</span>
-    <span class="movieKeyword" v-else-if="keyword === 'voteaverage'">평점 높은 순</span>
-    <span class="movieKeyword" v-else-if="keyword === 'adventure'">모험</span>
-    <span class="movieKeyword" v-else-if="keyword === 'action'">액션</span>
-    <span class="movieKeyword" v-else-if="keyword === 'sf'">sf</span>
-    <NormalMovieListItem
-      v-for="(movie, index) in movies" :key="`movie-${index}`"
-      :movie="movie"
-      class="keywordMovie"
-    />
+    <div class="normal-content mt-5 mx-auto col-10">
+      <div class="movieKeyword" v-if="keyword === 'popular'">인기순 <span class="light-font">모아보기</span></div>
+      <div class="movieKeyword" v-else-if="keyword === 'voteaverage'">평점순 <span class="light-font">모아보기</span></div>
+      <div class="movieKeyword" v-else-if="keyword === 'adventure'">모험 <span class="light-font">모아보기</span></div>
+      <div class="movieKeyword" v-else-if="keyword === 'action'">액션 <span class="light-font">모아보기</span></div>
+      <div class="movieKeyword" v-else-if="keyword === 'sf'">SF <span class="light-font">모아보기</span></div>
+    </div>
+    <div class="mt-4 col-12 row mx-auto">
+      <NormalMovieListItem
+        v-for="(movie, index) in movies" :key="`movie-${index}`"
+        :movie="movie"
+      />
+    </div>
   </div>
 </template>
 
@@ -55,12 +56,14 @@ export default {
 </script>
 
 <style>
-.keywordMovie {
-  border: 2px solid rebeccapurple;
+.movieKeyword {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2E8ADF;
 }
 
-.movieKeyword {
-  font-size: 24px;
-  font-weight: bold;
+.light-font {
+  font-weight: normal;
+  color: #000;
 }
 </style>
