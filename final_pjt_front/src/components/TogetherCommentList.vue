@@ -3,7 +3,7 @@
     <div>
       <p>TogetherCommentList</p>
       <div v-for="comment in comments" :key="comment.id">
-        <CommentListItem :comment="comment" />
+        <CommentListItem :comment="comment" @edit-comment="editComment" @delete-comment="deleteComment" />
       </div>
     </div>
     <TogetherCommentForm @comment-posted="refreshComments" />
@@ -14,14 +14,14 @@
 import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000'
 
-import CommentListItem from '@/components/CommentListItem' // CommentListItem 컴포넌트 import
-import TogetherCommentForm from '@/components/TogetherCommentForm' // CommentForm 컴포넌트 import
+import CommentListItem from '@/components/CommentListItem'
+import TogetherCommentForm from '@/components/TogetherCommentForm'
 
 export default {
   name: 'TogetherCommentList',
   components: {
-    CommentListItem, // CommentListItem 컴포넌트 등록
-    TogetherCommentForm // CommentForm 컴포넌트 등록
+    CommentListItem,
+    TogetherCommentForm
   },
   data() {
     return {
@@ -50,11 +50,53 @@ export default {
     },
     refreshComments() {
       this.getTogetherComments()
+    },
+    editComment(comment, updatedCommentData) {
+      axios({
+        method: 'put',
+        url: `${API_URL}/community/together/${this.$route.params.togetherpk}/${comment.id}/`,
+        data: {
+          content: updatedCommentData.content
+        },
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          const updatedComment = res.data
+          const index = this.comments.findIndex(c => c.id === updatedComment.id)
+          if (index !== -1) {
+            this.$set(this.comments, index, updatedComment)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    deleteComment(comment) {
+      axios({
+        method: 'delete',
+        url: `${API_URL}/community/together/${this.$route.params.togetherpk}/${comment.id}/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          const index = this.comments.findIndex(c => c.id === comment.id)
+          if (index !== -1) {
+            this.comments.splice(index, 1)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 }
 </script>
 
 <style>
-
+/* Add necessary styling here */
 </style>

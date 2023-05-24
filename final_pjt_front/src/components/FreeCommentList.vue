@@ -3,7 +3,7 @@
     <div>
       <p>FreeCommentList</p>
       <div v-for="comment in comments" :key="comment.id">
-        <CommentListItem :comment="comment" />
+        <CommentListItem :comment="comment" @edit-comment="editComment" @delete-comment="deleteComment" />
       </div>
     </div>
     <FreeCommentForm @comment-posted="refreshComments" />
@@ -14,14 +14,14 @@
 import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000'
 
-import CommentListItem from '@/components/CommentListItem' // CommentListItem 컴포넌트 import
-import FreeCommentForm from '@/components/FreeCommentForm' // CommentForm 컴포넌트 import
+import CommentListItem from '@/components/CommentListItem'
+import FreeCommentForm from '@/components/FreeCommentForm'
 
 export default {
   name: 'FreeCommentList',
   components: {
-    CommentListItem, // CommentListItem 컴포넌트 등록
-    FreeCommentForm // CommentForm 컴포넌트 등록
+    CommentListItem,
+    FreeCommentForm
   },
   data() {
     return {
@@ -50,11 +50,53 @@ export default {
     },
     refreshComments() {
       this.getFreeComments()
+    },
+    editComment(comment, updatedCommentData) {
+      axios({
+        method: 'put',
+        url: `${API_URL}/community/free/${this.$route.params.freepk}/${comment.id}/`,
+        data: {
+          content: updatedCommentData.content
+        },
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          const updatedComment = res.data
+          const index = this.comments.findIndex(c => c.id === updatedComment.id)
+          if (index !== -1) {
+            this.$set(this.comments, index, updatedComment)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    deleteComment(comment) {
+      axios({
+        method: 'delete',
+        url: `${API_URL}/community/free/${this.$route.params.freepk}/${comment.id}/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          const index = this.comments.findIndex(c => c.id === comment.id)
+          if (index !== -1) {
+            this.comments.splice(index, 1)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 }
 </script>
 
 <style>
-
+/* Add necessary styling here */
 </style>
