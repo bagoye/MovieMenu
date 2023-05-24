@@ -1,8 +1,9 @@
 <template>
   <div>
     <div v-if="!editing">
-      {{ review.content }}
-      {{ review.score }}
+      리뷰: {{ review.content }}
+      평점: {{ review.score }}
+      작성자: {{ review.user.username }}
       <button @click="startEditing">Edit</button>
       <button @click="deleteReview(review)">Delete</button>
     </div>
@@ -51,6 +52,7 @@ export default {
       this.updatedReviewData.score = null;
     },
     submitReview() {
+    if (this.isAuthor(this.review)) {
       // 리뷰 수정 작업 수행
       // 수정된 리뷰 데이터와 리뷰의 고유 식별자를 액션에 전달
       this.$store.dispatch('updateReview', {
@@ -67,22 +69,43 @@ export default {
           });
         }
         this.cancelEditing();
+      }).catch(error => {
+        // 리뷰 수정 중에 에러가 발생한 경우
+        console.error(error);
+        alert('리뷰 수정 중에 오류가 발생했습니다.');
       });
-    },
+    } else {
+      alert('작성자만 리뷰를 수정할 수 있습니다.');
+    }
+  },
+
     deleteReview(review) {
-      // 리뷰 삭제 작업 수행
-      // 리뷰의 고유 식별자를 액션에 전달
-      this.$store.dispatch('deleteReview', {
-        movieId: this.$route.params.pk,
-        reviewId: review.id,
-      }).then(() => {
-        // 액션이 완료된 후에 데이터를 직접 업데이트합니다.
-        const deletedReviewIndex = this.reviews.findIndex(r => r.id === review.id);
-        if (deletedReviewIndex !== -1) {
-          this.reviews.splice(deletedReviewIndex, 1);
-        }
-      });
+      if (this.isAuthor(this.review)) {
+        // 리뷰 삭제 작업 수행
+        // 리뷰의 고유 식별자를 액션에 전달
+        this.$store.dispatch('deleteReview', {
+          movieId: this.$route.params.pk,
+          reviewId: review.id,
+        }).then(() => {
+          // 액션이 완료된 후에 데이터를 직접 업데이트합니다.
+          const deletedReviewIndex = this.reviews.findIndex(r => r.id === review.id);
+          if (deletedReviewIndex !== -1) {
+            this.reviews.splice(deletedReviewIndex, 1);
+          }
+        }).catch(error => {
+          // 리뷰 삭제 중에 에러가 발생한 경우
+          console.error(error);
+          alert('리뷰 삭제 중에 오류가 발생했습니다.');
+        });
+      } else {
+        alert('작성자만 리뷰를 삭제할 수 있습니다.');
+      }
     },
+    isAuthor(review) {
+    // 현재 사용자와 리뷰의 작성자를 비교하여 작성자 여부를 확인합니다.
+    // 작성자이면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
+      return review.user.id === this.$store.state.userInfo.pk;
+    },    
   },
 };
 </script>
