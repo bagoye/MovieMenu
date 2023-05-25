@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-6 col-md-4 col-lg-2">
+  <div class="col-sm-6 col-md-4 col-lg-2 mt-3">
     <div class="movie-card">
       <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`">
 

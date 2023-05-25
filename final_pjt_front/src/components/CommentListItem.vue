@@ -1,10 +1,16 @@
 <template>
-  <div>
-    <div v-if="!editing">
-      {{ comment.content }}
-      <button @click="startEditing">Edit</button>
-      <button @click="deleteComment(comment)">Delete</button>
+  <div class="comment-list-item">
+    <div v-if="!editing" class="row">
+      <div class="comment-content col-8">
+        {{ comment.content }}
+      </div>
+      <div class="buttons col-4">
+        <button @click="startEditing">수정</button>
+        <button @click="deleteComment(comment)">삭제</button>
+      </div>
+      <div class="clear"></div>
     </div>
+
     <div v-else>
       <form @submit.prevent="submitComment">
         <label for="content">Content:</label>
@@ -51,5 +57,10 @@ export default {
 </script>
 
 <style>
-/* Add necessary styling here */
+.comment-list-item {
+  width: 80%;
+  height: 50px;
+  
+  margin: 0 auto;
+}
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="free-comment-form">
-    <form @submit.prevent="submitComment">
-      <textarea @keyup.enter="submitComment" v-model="commentContent" placeholder="댓글을 작성해주세요"></textarea>
-      <button type="submit">작성</button>
+    <form @submit.prevent="submitComment" class="row">
+      <textarea class="col-10" @keyup.enter="submitComment" v-model="commentContent" placeholder="댓글을 작성해주세요"></textarea>
+      <button type="submit" class="col-2 mx-auto">작성</button>
     </form>
   </div>
 </template>
@@ -44,3 +44,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.free-comment-form {
+  width: 80%;
+  margin: 0 auto;
+}
+</style>

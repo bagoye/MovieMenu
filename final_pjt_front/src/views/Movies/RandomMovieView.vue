@@ -3,40 +3,42 @@
     <div class="menu-out">
       <div class="menu-in">
         <h1 class="mt-5">오늘의 추천 메뉴</h1>
-        <div class="mt-5">
-          <div @click="pickOneMovie" class="cardbox">
-            <img v-if="pickOne" :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${pickOne.poster_path}`" class="card-img-top" alt="...">
-            <span v-if="pickOne === ''" class="click-txt">클릭해주세요</span>
+        <div class="random-wrap row mt-5">
+          <div class="col-sm-12 col-lg-5">
+            <div @click="pickOneMovie" class="cardbox">
+              <img v-if="pickOne" :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${pickOne.poster_path}`" class="card-img-top" alt="...">
+              <span v-if="pickOne === ''" class="click-txt">클릭해주세요</span>
+            </div>
           </div>
-        </div>
 
-        <div class="right-info">
-          <div class="movie-info">
-            <h2>{{ pickOne.title }}</h2>
-            <div>{{ pickOne.overview }}</div>
-            <div>{{ pickOne.runtime }}</div>
-          </div>
-          <!-- 여기서 클릭해주세요 누르고 영화 정보 나와야 이 영화로 할게요 부분 나오도록 하기 -->
-          <div class="movie-btn" v-if="pickOne">
-            <router-link
-              :to="{
-                name:'MovieDetailView', 
-                params: { pk: pickOne.id }}">
+          <div class="right-info col-sm-12 col-lg-7 mt-4">
+            <div class="movie-info">
+              <h2>{{ pickOne.title }}</h2>
+              <div>{{ pickOne.overview }}</div>
+              <div>{{ pickOne.runtime }}</div>
+            </div>
+            <!-- 여기서 클릭해주세요 누르고 영화 정보 나와야 이 영화로 할게요 부분 나오도록 하기 -->
+            <div class="movie-btn" v-if="pickOne">
+              <router-link
+                :to="{
+                  name:'MovieDetailView', 
+                  params: { pk: pickOne.id }}">
+                    <button>
+                      이 영화로 할게요
+                    </button>
+              </router-link>
+              <!-- <button @click="selectMovie">이 영화로 할게요</button> -->
+              <button @click="pickOneMovie">다시 뽑을래요</button>
+            </div>
+            <div>
+              <span>나의 취향과 상황에 맞춰 추천을 받고 싶다면?</span>
+              <router-link
+                :to="{name:'ChooseView'}">
                   <button>
-                    이 영화로 할게요
+                    선택하러 가기
                   </button>
-            </router-link>
-            <!-- <button @click="selectMovie">이 영화로 할게요</button> -->
-            <button @click="pickOneMovie">다시 뽑을래요</button>
-          </div>
-          <div>
-            <span>나의 취향과 상황에 맞춰 추천을 받고 싶다면?</span>
-            <router-link
-              :to="{name:'ChooseView'}">
-                <button>
-                  선택하러 가기
-                </button>
-            </router-link>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -102,6 +104,11 @@ export default {
 
 .click-txt {
   line-height: 450px;
+}
+
+.random-wrap {
+  width: 90%;
+  margin: 0 auto;
 }
 
 </style>
