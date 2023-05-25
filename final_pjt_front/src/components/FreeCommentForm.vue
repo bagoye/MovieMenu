@@ -47,7 +47,10 @@ export default {
 
 <style>
 .free-comment-form {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
+}
+.free-comment-form textarea {
+  border-radius: 10px;
 }
 </style>

@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="free-comment-list">
+    <p style="text-align:left;"><b>댓글</b></p>
     <div>
-      <p>댓글</p>
       <div v-for="comment in comments" :key="comment.id">
         <CommentListItem :comment="comment" @edit-comment="editComment" @delete-comment="deleteComment" />
+        <hr>
       </div>
     </div>
     
@@ -111,5 +112,10 @@ export default {
 </script>
 
 <style>
-/* Add necessary styling here */
+.free-comment-list {
+  width: 100%;
+  background-color: #D6E7F6;
+  padding: 20px 40px;
+  border-radius: 10px;
+}
 </style>

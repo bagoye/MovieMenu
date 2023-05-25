@@ -17,28 +17,28 @@
           </div>
 
           <div v-if="isEditMode" class="edit-form row">
-            <p><b>수정하기</b></p>
+            <p class="mt-4"><b>게시글 수정하기</b></p>
             <label for="edit-title" class="col-1">제목</label>
             <input id="edit-title" v-model="editedTitle" placeholder="수정할 제목" class="col-3" />
             <label for="edit-content" class="col-1">내용</label>
             <textarea id="edit-content" v-model="editedContent" placeholder="수정할 내용" class="col-7"></textarea>
-            <div>
-              <button @click="articleUpdate">수정</button>
+            <div class="mt-4">
+              <button @click="articleUpdate" class="edit-btn">수정</button>
               <button @click="cancelEdit">취소</button>
             </div>
             <div class="clear"></div>
           </div>
 
           <div v-else class="buttons">
-            <button @click="toggleEditMode">수정</button>
-            <button @click="articleDelete">삭제</button>
+            <button @click="toggleEditMode" class="edit-btn">수정</button>
+            <button @click="articleDelete" class="del-btn">삭제</button>
           </div>
-
-          <FreeCommentList class="clear my-3"/>
+          <div class="clear"></div>
+          <FreeCommentList class="my-5"/>
 
           <router-link
             :to="{name:'FreeCommunityView'}">
-              <button style="width:100px;">뒤로가기</button> 
+              <button style="width:100px;" class="mb-5">뒤로가기</button> 
           </router-link>
         </div>
         </div>
@@ -221,5 +221,11 @@ export default {
 .edit-form {
   width: 100%;
   height: 150px;
+}
+
+.free-detail-view .edit-form {
+  top: 50%;
+  width: 100%;
+  height: 280px;
 }
 </style>

@@ -1,8 +1,10 @@
 <template>
-  <div>
-    ProfileView
-    <ProfileUserSection />
-
+  <div class="profile-view">
+    <div class="menu-out">
+      <div class="menu-in">
+        <ProfileUserSection class="mt-5" />
+      </div>
+    </div>
   </div>
 </template>
 

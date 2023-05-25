@@ -5,21 +5,25 @@
         {{ comment.content }}
       </div>
       <div class="buttons col-4">
-        <button @click="startEditing">수정</button>
-        <button @click="deleteComment(comment)">삭제</button>
+        <button @click="startEditing" class="edit-btn">수정</button>
+        <button @click="deleteComment(comment)" class="del-btn">삭제</button>
       </div>
       <div class="clear"></div>
     </div>
 
-    <div v-else>
-      <form @submit.prevent="submitComment">
-        <label for="content">Content:</label>
-        <textarea @keyup.enter="submitComment" v-model="updatedCommentData.content" id="content"></textarea>
-        <button type="submit">Submit</button>
-        <button @click="cancelEditing">Cancel</button>
+    <div v-else class="edit-form text-center">
+      <div class="review-text">댓글 수정하기</div>
+      <form @submit.prevent="submitComment" class="row">
+        <label for="content" class="col-1">내용</label>
+        <textarea @keyup.enter="submitComment" v-model="updatedCommentData.content" id="content" class="col-6"></textarea>
+        <div class="edit-form-btn col-2">
+          <button type="submit">수정</button>
+          <button @click="cancelEditing">취소</button>
+        </div>
       </form>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -58,9 +62,13 @@ export default {
 
 <style>
 .comment-list-item {
-  width: 80%;
+  width: 100%;
   height: 50px;
   
   margin: 0 auto;
 }
+.comment-content {
+  line-height: 50px;
+}
+
 </style>

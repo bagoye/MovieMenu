@@ -1,49 +1,68 @@
 <template> 
-  <div>
-    <h1>{{ user.username }}님의 프로필</h1>
+  <div class="profile-user-section">
+    <h1 class="profile-title">{{ user.username }}님의 마이페이지</h1>
     <hr>
+
     <div>
-      <h1>{{ user.username }}님이 작성한 글</h1>
-        <h2>자유게시판</h2>
-          <div v-for="freearticle in userarticles" :key="freearticle.id">
+      <div class="user-articles row">
+        <h1>{{ user.username }}님이 <span class="text-blue">작성한 글</span></h1>
+        
+        <div class="free-articles col-sm-12 col-lg-6">
+          <div class="profile-article mb-3">자유 게시판</div>
+          <div v-for="freearticle in userarticles" :key="freearticle.id" class="hr-none">
             <router-link
             :to="{
               name:'FreeDetailView', 
               params: { freepk: freearticle.id }}">
-              {{ freearticle.title }}
+              제목 : {{ freearticle.title }}
             </router-link>
-            내용:{{ freearticle.content }}
+            <span style="margin-left:20px;">
+              내용 : {{ freearticle.content }}
+            </span>
+            <hr>
           </div>
+        </div>
 
-        <h2>같이봐요 게시판</h2>
-          <div v-for="togetherarticle in togetherarticles" :key="togetherarticle.id">
-            <router-link :to="{ name: 'TogetherDetailView', params: { togetherpk: togetherarticle.id }}">
-              {{ togetherarticle.title }}
-            </router-link>
-            내용: {{ togetherarticle.content }}
+        <div class="together-articles col-sm-12 col-lg-6">
+          <div class="profile-article mb-3">영화 같이 봐요</div>
+            <div v-for="togetherarticle in togetherarticles" :key="togetherarticle.id" class="hr-none">
+              <router-link :to="{ name: 'TogetherDetailView', params: { togetherpk: togetherarticle.id }}">
+                제목 : {{ togetherarticle.title }}
+              </router-link>
+              <span style="margin-left:20px;">
+                내용: {{ togetherarticle.content }}
+              </span>
+              <hr>
+            </div>
           </div>
-    </div>
+        </div>
+      </div>
     <hr>
-    <h1>좋아하는 영화</h1>
-      <div v-if="movies.length > 0">
-        <div v-for="movie in movies" :key="movie.id">
-          {{ movie.title }}
-          <router-link
-            :to="{
-              name:'MovieDetailView', 
-              params: { pk: movie.pk }}">
-          <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`">
-          </router-link>
+    <h1>{{ user.username }}님이 <span class="text-blue">좋아하는 영화</span></h1>
+      <div v-if="movies.length > 0" class="row mt-4">
+        <div v-for="movie in movies" :key="movie.id" class="col-sm-6 col-lg-4 like-movie-wrap">
+          <div class="like-movie-img">
+            <router-link
+              :to="{
+                name:'MovieDetailView', 
+                params: { pk: movie.pk }}">
+            <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`">
+            </router-link>
+          </div>
+          <div class="like-movie-title">{{ movie.title }}</div>
           
         </div> 
       </div>
-      <div v-else>
+
+      <div v-else class="my-5 text-center">
         <p>좋아하는 영화가 없습니다.</p>
       </div>
     <hr>
-    <h1>작성한 리뷰</h1>
-      <div v-for="(review,index) in userReviews" :key="index">
-        <p>{{ review.user.username }}: {{ review.content }}</p>
+    <h1>{{ user.username }}님이 <span class="text-blue">작성한 리뷰</span></h1>
+      <div v-for="(review,index) in userReviews" :key="index" class="hr-none user-review">
+        <span class="text-blue">{{ review.user.username }}님</span>
+        <span>{{ review.content }}</span>
+        <hr>
       </div>
 
   </div>
@@ -142,5 +161,59 @@ export default {
 </script>
 
 <style>
+.profile-user-section {
+  width: 85%;
+  margin: 0 auto;
+}
 
+.profile-user-section hr {
+  margin: 40px auto;
+}
+
+.profile-title {
+  text-align: center;
+  font-size: 32px;
+  color: #2E8ADF;
+}
+.text-blue {
+  color: #2E8ADF;
+}
+
+.profile-article {
+  font-size: 20px;
+  margin-top: 20px;
+}
+.free-articles hr, .together-articles hr {
+  width: 95%;
+  margin: 16px 0;
+}
+
+.hr-none:last-child hr {
+  display: none;
+}
+
+.like-movie-wrap {
+  margin: 10px 0;
+}
+.like-movie-wrap:hover img {
+  filter: brightness(50%);
+}
+.like-movie-img img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.like-movie-title {
+  text-align: center;
+  margin-top: 10px; 
+}
+.user-review {
+  margin-top: 40px;
+}
+.user-review span {
+  margin-right: 20px;
+}
+.user-review hr {
+  margin: 20px 0;
+}
 </style>

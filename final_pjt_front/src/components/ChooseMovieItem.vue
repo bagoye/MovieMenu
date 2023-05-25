@@ -5,13 +5,13 @@
       name:'MovieDetailView', 
       params: { pk: movie.id }}">
       <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`">
-      <div class="movie-trans"></div>
       <div class="movie-info-wrap">
         <div>{{ movie.title }}</div>
         <div>{{ formatRuntime(movie.runtime) }}</div>
         <div>영화 세부 내용 보기</div>
       </div>
     </router-link>
+    
 
   </div>
 </template>
@@ -38,6 +38,9 @@ export default {
   width: 100%;
   border-radius: 10px;
 }
+.choose-item>.item-link:hover img {
+  filter: brightness(45%);
+}
 
 .choose-item {
   margin-bottom: 20px;
@@ -49,19 +52,20 @@ export default {
 
 .movie-info-wrap {
   width: 100%;
-  top: 0;
+  top: -55px;
   position: absolute;
   text-align: center;
-  top: 0;
   visibility: hidden;
   color: #fff;
-  background-color: #fff;
+}
+.movie-info-wrap > * {
+  margin: 20px 0;
 }
 
 .choose-item:hover .movie-info-wrap {
   visibility: visible;
 }
-.choose-item:hover .movie-trans {
+.choose-item:hover .choose-trans {
   visibility: visible;
 }
 </style>

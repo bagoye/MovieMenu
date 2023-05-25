@@ -11,19 +11,24 @@
               <p class="clear"></p>
             </div>
             
-            <div class="article-content">
-              <p>내용 : {{ article?.content }}</p>
-              <p>수정시간 : {{ article?.updated_at }}</p>
-              <div>
-                <p>영화제목 : {{ getMovie[0].title }} </p>
+            <div class="article-content row">
+              <div class="movie-img col-sm-12 col-lg-6 mx-auto">
                 <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${getMovie[0].poster_path}`">
-                <p>줄거리 : {{ getMovie[0].overview|truncateText(100) }}</p>
-                <p>평점 : {{ getMovie[0].vote_average }}</p>
-                <p>런타임 : {{ getMovie[0].runtime }}분</p>
+              </div>
+              <div class="col-sm-12 col-lg-6 article-movie-content">
+                <p class="mt-3"><b>내용</b></p>
+                <p>{{ article?.content }}</p>
+                <hr>
+                <p class="together-movie-title">{{ getMovie[0].title }}</p>
+                <div class="row text-center">
+                  <p class="col-6">평점 : {{ getMovie[0].vote_average }} 점</p>
+                  <p class="col-6">런타임 : {{ formatRuntime(getMovie[0].runtime) }}</p>
+                </div>
+                <p class="mt-3"><b>줄거리</b></p>
+                <p>{{ getMovie[0].overview|truncateText(100) }}</p>
               </div>
             </div>
-            <!-- article?.movie는 movie의 id -->
-            <!-- <p> {{ allMovies }}</p> -->
+
           </div>
           <div v-if="isEditMode" class="edit-form row">
             <p><b>수정하기</b></p>
@@ -33,15 +38,16 @@
             <button @click="cancelEdit">취소</button>
           </div>
           <div v-else class="buttons">
-            <button @click="toggleEditMode">수정</button>
-            <button @click="togetherArticleDelete">삭제</button>
+            <button @click="toggleEditMode" class="edit-btn">수정</button>
+            <button @click="togetherArticleDelete" class="del-btn">삭제</button>
           </div>
+          <div class="clear"></div>
           <div>
-            <TogetherCommentList class="clear my-3"/>
+            <TogetherCommentList class="my-5"/>
           </div>
           <router-link
-            :to="{name:'TogetherCommunityView'}">
-              <button style="width:100px;">뒤로가기</button> 
+            :to="{name:'TogetherCommunityView'}" class="back-btn">
+              <button style="width:100px;" class="mb-5">뒤로가기</button> 
           </router-link>
         </div>
       </div>
@@ -183,6 +189,11 @@ export default {
         );
       }
     },
+    formatRuntime(minutes) {
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      return `${hours}H ${mins}M`;
+    },
   },
   filters: {
     formatDate(value) {
@@ -203,3 +214,22 @@ export default {
   },
 }
 </script>
+
+<style>
+.article-content {
+  width: 100%;
+}
+.article-content img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.together-movie-title {
+  color: #2E8ADF;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+}
+
+
+</style>
