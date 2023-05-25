@@ -101,6 +101,8 @@ def movie_detail(request, movie_pk):
         'youtube_key': movie.youtube_key,
         'vote_average': movie.vote_average,
         'overview': movie.overview,
+        'poster_path': movie.poster_path,
+        'pk': movie.pk,
 
         # 다른 필드들도 필요에 따라 추가
         'actors': actors_data,

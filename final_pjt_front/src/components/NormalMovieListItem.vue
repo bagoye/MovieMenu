@@ -1,8 +1,8 @@
 <template>
   <div class="col-sm-6 col-md-4 col-lg-2">
     <div class="movie-card">
-        <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`">
-      
+      <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`">
+
       <div class="movie-trans"></div>
 
       <div class="movie-card-content">
@@ -13,14 +13,14 @@
             :to="{
               name:'MovieDetailView', 
               params: { pk: movie.id }}">
-              <button>▶</button>
+            <button>▶</button>
           </router-link>
-          <button>😍</button>
-          <!-- <button>✅</button> -->
+          <button @click="toggleLike" :class="{ liked: isLiked }">
+            {{ isLiked ? '✅' : '😍' }}
+          </button>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -29,17 +29,44 @@ export default {
   name: 'NormalMovieListItem',
   props: {
     movie: Object,
+    userId: String,
+  },
+  data() {
+    return {
+      isLiked: false, // 버튼 상태를 저장하는 데이터 속성 추가
+    };
+  },
+  created() {
+    this.isLiked = this.checkIsLiked(); // 페이지 로드 시 좋아요 상태 초기화
   },
   methods: {
     formatRuntime(minutes) {
-      const hours = Math.floor(minutes / 60); // 시간 계산
-      const mins = minutes % 60; // 분 계산
-      
-      // 시간과 분을 "H"와 "M"으로 구분하여 반환
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
       return `${hours}H ${mins}M`;
     },
-  }
-}
+    toggleLike() {
+      const userLikesKey = `userLikes:${this.$store.state.userInfo.pk}`;
+      const userLikes = JSON.parse(localStorage.getItem(userLikesKey)) || {};
+
+      if (userLikes[this.movie.id]) {
+        delete userLikes[this.movie.id];
+        this.isLiked = false; // 버튼 상태 변경
+      } else {
+        userLikes[this.movie.id] = true;
+        this.isLiked = true; // 버튼 상태 변경
+      }
+
+      localStorage.setItem(userLikesKey, JSON.stringify(userLikes));
+      this.$emit('like-updated', userLikes); // 좋아요 상태 변경을 부모 컴포넌트로 알림
+    },
+    checkIsLiked() {
+      const userLikesKey = `userLikes:${this.userId}`;
+      const userLikes = JSON.parse(localStorage.getItem(userLikesKey)) || {};
+      return !!userLikes[this.movie.id];
+    },
+  },
+};
 </script>
 
 <style scoped>

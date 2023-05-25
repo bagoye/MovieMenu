@@ -16,8 +16,8 @@
         {{ actor.name }}
       </div>
     <p>줄거리: {{ movie?.overview }} </p>
-    <button @click="toggleLike" :class="{ 'liked': movie?.liked }">
-      {{ movie?.liked ? '좋아요 취소' : '좋아요' }}
+    <button @click="toggleLike" :class="{ liked: isLiked }">
+      {{ isLiked ? '✅' : '😍' }}
     </button>
 
     <div class="review-list">
@@ -38,12 +38,15 @@ export default {
   data() {
     return {
       movie: null,
+      isLiked: false,
     }
   },
   created() {
     this.getMovieDetail()
     
     window.scrollTo(0, 0); // 스크롤 위치 조정
+
+    this.checkIsLiked();
   },
   methods: {
     getMovieDetail() {
@@ -60,17 +63,24 @@ export default {
       })
     },
     toggleLike() {
-      axios({
-        method: 'post',
-        url: `http://127.0.0.1:8000/movies/${this.$route.params.pk}/like/`
-      })
-      .then((res) => {
-        console.log(res)
-        this.movie.liked = res.data.isLike
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      const userLikesKey = `userLikes:${this.$store.state.userInfo.pk}`;
+      const userLikes = JSON.parse(localStorage.getItem(userLikesKey)) || {};
+
+      if (userLikes[this.movie.pk]) {
+        delete userLikes[this.movie.pk];
+        this.isLiked = false; // 버튼 상태 변경
+      } else {
+        userLikes[this.movie.pk] = true;
+        this.isLiked = true; // 버튼 상태 변경
+      }
+
+      localStorage.setItem(userLikesKey, JSON.stringify(userLikes));
+      this.$emit('like-updated', userLikes); // 좋아요 상태 변경을 부모 컴포넌트로 알림
+    },
+    checkIsLiked() {
+      const userLikesKey = `userLikes:${this.$store.state.userInfo.pk}`;
+      const userLikes = JSON.parse(localStorage.getItem(userLikesKey)) || {};
+      this.isLiked = !!userLikes[this.movie.pk];
     },
   },
 }
