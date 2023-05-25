@@ -4,7 +4,7 @@
       <div class="menu-in">
         <h1 class="mt-5">오늘의 추천 메뉴</h1>
         <div class="random-wrap row mt-5">
-          <div class="col-sm-12 col-lg-5">
+          <div class="col-sm-12 col-lg-5 mb-3">
             <div @click="pickOneMovie" class="cardbox">
               <img v-if="pickOne" :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${pickOne.poster_path}`" class="card-img-top" alt="...">
               <span v-if="pickOne === ''" class="click-txt">클릭해주세요</span>
@@ -14,29 +14,28 @@
           <div class="right-info col-sm-12 col-lg-7 mt-4">
             <div class="movie-info">
               <h2 class="pick-title">{{ pickOne.title }}</h2>
-              <div class="mt-4">{{ pickOne.overview }}</div>
+              <div class="mt-4" v-if="pickOne">{{ truncateOverview(pickOne.overview) }}</div>
             </div>
             <!-- 여기서 클릭해주세요 누르고 영화 정보 나와야 이 영화로 할게요 부분 나오도록 하기 -->
-            <div class="mt-3" v-if="pickOne">영화 러닝 타임 : {{ formatRuntime(pickOne.runtime) }}</div>
+            <div class="mt-3" v-if="pickOne">러닝 타임 : {{ formatRuntime(pickOne.runtime) }}</div>
             <div class="movie-btn mt-3" v-if="pickOne">
               <router-link
                 :to="{
                   name:'MovieDetailView', 
                   params: { pk: pickOne.id }}">
-                    <button>
+                    <button class="btn-blue">
                       이 영화로 할게요
                     </button>
               </router-link>
               <!-- <button @click="selectMovie">이 영화로 할게요</button> -->
               <button @click="pickOneMovie">다시 뽑을래요</button>
             </div>
-            <div>
+            <div class="my-4">
               <span>나의 취향과 상황에 맞춰 추천을 받고 싶다면?</span>
               <router-link
-                :to="{name:'ChooseView'}">
-                  <button>
-                    선택하러 가기
-                  </button>
+                :to="{name:'ChooseView'}"
+                style="color: #2E8ADF;">
+                선택하러 가기
               </router-link>
             </div>
           </div>
@@ -81,6 +80,12 @@ export default {
       const hours = Math.floor(minutes / 60);
       const mins = minutes % 60;
       return `${hours}H ${mins}M`;
+    },
+    truncateOverview(overview) {
+      if (overview.length > 150) {
+        return overview.slice(0, 150) + '...';
+      }
+      return overview;
     },
   }
 }
@@ -130,6 +135,7 @@ export default {
   border-radius: 5px;
   margin: 2.5%;
   width: 45%;
+  height: 36px;
 }
 
 .movie-btn button:hover {

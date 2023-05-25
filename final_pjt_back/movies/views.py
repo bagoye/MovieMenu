@@ -42,7 +42,7 @@ def sf(request):
 
 @api_view(['GET', ])
 def allmovie(request):
-    movie_data = Movie.objects.all()[:50]
+    movie_data = Movie.objects.all()
     serializer = MovieListSerializer(movie_data, many=True)
     return Response(serializer.data)
 

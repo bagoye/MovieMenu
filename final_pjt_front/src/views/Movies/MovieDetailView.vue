@@ -3,8 +3,14 @@
     <h1 class="movieKeyword">{{ movie?.title }}</h1>
     <iframe width="100%" height="400px" :src="`https://www.youtube.com/embed/${movie?.youtube_key}`" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     
-    <p>평점 : {{ movie?.vote_average }}</p>
-    <p>러닝타임 : {{ movie?.runtime }}</p>
+    <div class="detail-middle mt-3">
+      <button class="like-btn" @click="toggleLike" :class="{ liked: isLiked }">
+        {{ isLiked ? '좋아요 취소' : '좋아요' }}
+      </button>
+      <p><b>평점 : </b>{{ movie?.vote_average }} 점</p>
+      <p><b>러닝 타임 : </b>{{ formatRuntime(movie?.runtime) }}</p>
+    </div>
+
     <div>감독 : 
       <div class="crew-img">
         <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie?.directors[0].profile_path}`" @error="handleImageErrorDirector">
@@ -21,9 +27,7 @@
         {{ actor.name }}
       </div>
     <p>줄거리: {{ movie?.overview }} </p>
-    <button @click="toggleLike" :class="{ liked: isLiked }">
-      {{ isLiked ? '✅' : '😍' }}
-    </button>
+
 
     <div class="review-list">
       <ReviewList />
@@ -97,19 +101,35 @@ export default {
     handleImageErrorActor(event) {
       event.target.src = require('@/assets/actor.png')
     },
+    formatRuntime(minutes) {
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      return `${hours}H ${mins}M`;
+    },
   },
 }
 </script>
 
 <style>
+/* 좋아요 */
+.like-btn {
+  width: 150px;
+  height: 44px;
+  background-color: #fff;
+  border: 1px solid #2E8ADF;
+  color: #2E8ADF;;
+  border-radius: 5px;
+}
 .liked {
-  color: red;
+  background-color: #2E8ADF;
+  color: #fff;
   font-weight: bold;
 }
 
 /* 동영상 테두리 둥글게 */
 iframe { 
   border-radius: 10px;
+  margin-top: 20px;
 }
 
 .crew-img {
@@ -123,6 +143,18 @@ iframe {
   width: 100px;
   height: 100px;
   object-fit: cover;
+}
+
+
+.detail-middle {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  display: flex;
+  justify-content: flex-end;
+}
+.detail-middle button {
+  line-height: 0;
 }
 
 </style>

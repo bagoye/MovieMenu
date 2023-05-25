@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div>
     <h1>{{ user.username }}님의 프로필</h1>
     <hr>
@@ -42,9 +42,10 @@
       </div>
     <hr>
     <h1>작성한 리뷰</h1>
-      <div v-for="review in userReviews" :key="review.id">
-        <p>{{ review.content }}</p>
+      <div v-for="(review,index) in userReviews" :key="index">
+        <p>{{ review.user.username }}: {{ review.content }}</p>
       </div>
+
   </div>
 </template>
 
@@ -59,17 +60,16 @@ export default {
       user: this.$store.state.userInfo,
       userarticles: null,
       togetherarticles: [],
-      movies: []
+      movies: [],
+      userReviews: [],
     }
   },
   computed: {
-    userReviews() {
-      return this.$store.state.reviews.filter((review) => {
-        return review.user === this.user.pk;
-      });
-    },
     articles() {
       return this.$store.state.articles;
+    },
+    articlesTogether() {
+      return this.$store.state.articlesTogether
     },
     likedMovies() {
       const userLikesKey = `userLikes:${this.user.pk}`;
@@ -93,14 +93,20 @@ export default {
     // 모든 axios 요청을 병렬로 처리하기 위해 Promise.all 사용
     Promise.all(movieRequests)
       .then((responses) => {
-        const movieTitles = responses.map((res) => res.data);
+        const movies = responses.map((res) => res.data);
         // const moviePoster = responses.map((res) => res.data.poster_path);
-        this.movies = movieTitles;
+        this.movies = movies;
       })
       .catch((error) => {
         console.log(error);
       });
+
+    this.userReviews = this.$store.state.reviews.filter((review) => {
+      return review.user.id === this.user.pk;
+    });
+
   },
+  
   methods: {
     findUserArticle() {
       const userArticles = this.articles.filter((article) => {
@@ -109,7 +115,7 @@ export default {
       this.userarticles = userArticles;
     },
     findUserTogetherArticle() {
-      const togetherArticles = this.togetherarticles.filter((article) => {
+      const togetherArticles = this.articlesTogether.filter((article) => {
         return article.user === this.$store.state.userInfo.pk;
       });
       this.togetherarticles = togetherArticles;
