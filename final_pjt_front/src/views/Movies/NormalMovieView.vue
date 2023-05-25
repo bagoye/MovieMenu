@@ -16,7 +16,7 @@
       v-for="(keyword, index) in keywords" :key="`keyword-${index}`"
       :keyword="keyword"
     />
-
+    <div class="footer"></div>
     <div class="go-top" onClick="javascript:window.scrollTo(0,0)">TOP</div>
   </div>
 </template>
@@ -104,5 +104,9 @@ export default {
   color: #fff;
   font-size: 16px;
   font-weight: bold;
+}
+
+.footer {
+  height: 100px;
 }
 </style>

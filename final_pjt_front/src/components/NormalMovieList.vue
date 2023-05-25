@@ -10,7 +10,7 @@
     </div>
     <div class="mt-4 col-12 row mx-auto normal-bing">
       <NormalMovieListItem
-        v-for="(movie, index) in movies" :key="`movie-${index}`"
+        v-for="(movie, index) in movies.slice(0, 12)" :key="`movie-${index}`"
         :movie="movie"
       />
       <!-- 로딩중 빙글빙글 -->
@@ -75,4 +75,5 @@ export default {
   top: 0;
   left: 50%;
 }
+
 </style>
