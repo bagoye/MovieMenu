@@ -54,8 +54,8 @@ export default {
   created() {
     this.$store.dispatch('getUserInfo')
     console.log(this.user.data)
-
   },
+  
   computed: {
     ...mapGetters(['isLogin']),
   },

@@ -58,7 +58,7 @@
         <p>좋아하는 영화가 없습니다.</p>
       </div>
     <hr>
-    <h1>{{ user.username }}님이 <span class="text-blue">작성한 리뷰</span></h1>
+    <h1 class="user-review-title">{{ user.username }}님이 <span class="text-blue">작성한 리뷰</span></h1>
       <div v-for="(review,index) in userReviews" :key="index" class="hr-none user-review">
         <span class="text-blue">{{ review.user.username }}님</span>
         <span>{{ review.content }}</span>
@@ -207,13 +207,14 @@ export default {
   text-align: center;
   margin-top: 10px; 
 }
-.user-review {
-  margin-top: 40px;
+.user-review-title {
+  margin-bottom: 40px;
 }
 .user-review span {
   margin-right: 20px;
 }
 .user-review hr {
-  margin: 20px 0;
+  width: 95%;
+  margin: 20px auto;
 }
 </style>

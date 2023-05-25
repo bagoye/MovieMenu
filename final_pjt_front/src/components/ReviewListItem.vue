@@ -19,7 +19,7 @@
         <label for="score" class="col-1">평점</label>
         <input v-model="updatedReviewData.score" type="number" id="score" min="0" max="5" step="0.5" class="col-2">
         <div class="edit-form-btn col-2">
-          <button type="submit">수정</button>
+          <button type="submit" class="edit-btn">수정</button>
           <button @click="cancelEditing">취소</button>
         </div>
       </form>
@@ -155,6 +155,18 @@ export default {
 
 .review-text {
   font-weight: bold;
+}
+
+.review-item .edit-form button {
+  margin: 0 5px;
+  line-height: 0;
+  border-radius: 5px;
+}
+.review-item .edit-form {
+  width: 100%;
+}
+.review-item .edit-form textarea, .review-item .edit-form input {
+  border-radius: 5px;
 }
 
 </style>

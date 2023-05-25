@@ -12,14 +12,12 @@
     </div>
 
     <div v-else class="edit-form text-center">
-      <div class="review-text">댓글 수정하기</div>
-      <form @submit.prevent="submitComment" class="row">
+      <div class="review-text mt-5">댓글 수정하기</div>
+      <form @submit.prevent="submitComment" class="row mt-5">
         <label for="content" class="col-1">내용</label>
-        <textarea @keyup.enter="submitComment" v-model="updatedCommentData.content" id="content" class="col-6"></textarea>
-        <div class="edit-form-btn col-2">
-          <button type="submit">수정</button>
-          <button @click="cancelEditing">취소</button>
-        </div>
+        <textarea @keyup.enter="submitComment" v-model="updatedCommentData.content" id="content" class="col-8"></textarea>
+        <button type="submit" class="col-1 edit-btn">수정</button>
+        <button @click="cancelEditing" class="col-1">취소</button>
       </form>
     </div>
   </div>
@@ -66,9 +64,16 @@ export default {
   height: 50px;
   
   margin: 0 auto;
+  position: relative;
 }
 .comment-content {
   line-height: 50px;
+}
+.comment-list-item .edit-form button {
+  line-height: 0;
+}
+.comment-list-item .edit-form textarea {
+  border-radius: 5px;
 }
 
 </style>

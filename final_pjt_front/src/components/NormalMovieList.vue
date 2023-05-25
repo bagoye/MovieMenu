@@ -1,9 +1,6 @@
 <template>
   <div class="normal-list row">
-    <!-- 로딩중 빙글빙글 -->
-    <div class="spinner-border text-primary" role="status" v-if="movies === null">
-      <span class="visually-hidden">Loading...</span>
-    </div>
+
     <div class="normal-content mt-5 mx-auto col-10">
       <div class="movieKeyword" v-if="keyword === 'popular'">인기순 <span class="light-font">모아보기</span></div>
       <div class="movieKeyword" v-else-if="keyword === 'voteaverage'">평점순 <span class="light-font">모아보기</span></div>
@@ -11,11 +8,15 @@
       <div class="movieKeyword" v-else-if="keyword === 'action'">액션 <span class="light-font">모아보기</span></div>
       <div class="movieKeyword" v-else-if="keyword === 'sf'">SF <span class="light-font">모아보기</span></div>
     </div>
-    <div class="mt-4 col-12 row mx-auto">
+    <div class="mt-4 col-12 row mx-auto normal-bing">
       <NormalMovieListItem
         v-for="(movie, index) in movies" :key="`movie-${index}`"
         :movie="movie"
       />
+      <!-- 로딩중 빙글빙글 -->
+      <div class="spinner-border text-primary bingbing" role="status" v-if="movies === null">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
   </div>
 </template>
@@ -65,5 +66,13 @@ export default {
 .light-font {
   font-weight: normal;
   color: #000;
+}
+.normal-bing {
+  position: relative;
+}
+.bingbing {
+  position: absolute;
+  top: 0;
+  left: 50%;
 }
 </style>

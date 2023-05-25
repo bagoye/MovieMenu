@@ -218,14 +218,16 @@ export default {
   float: right;
 }
 
-.edit-form {
-  width: 100%;
-  height: 150px;
+.article-wrap {
+  position: relative;
 }
 
 .free-detail-view .edit-form {
-  top: 50%;
+  top: 0;
+  left: 10px;
   width: 100%;
   height: 280px;
+  position: absolute;
 }
+
 </style>

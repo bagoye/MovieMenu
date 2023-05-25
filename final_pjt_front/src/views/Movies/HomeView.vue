@@ -31,6 +31,9 @@ export default {
       username: null,
     }
   },
+  async created() {
+    window.scrollTo(0, 0); // 스크롤 위치 조정
+  },
   mounted() {
     this.username = this.$store.state.userInfo.username
   },

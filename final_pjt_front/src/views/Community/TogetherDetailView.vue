@@ -31,10 +31,13 @@
 
           </div>
           <div v-if="isEditMode" class="edit-form row">
-            <p><b>수정하기</b></p>
-            <input v-model="editedTitle" placeholder="수정할 제목" />
-            <textarea v-model="editedContent" placeholder="수정할 내용"></textarea>
-            <button @click="togetherArticleUpdate">수정</button>
+            <p><b>게시글 수정하기</b></p>
+            <label for="edit-title" class="">제목</label>
+            <input v-model="editedTitle" id="edit-title" placeholder="수정할 제목" />
+
+            <label for="edit-content" class="">내용</label>
+            <textarea v-model="editedContent" id="edit-content" placeholder="수정할 내용"></textarea>
+            <button @click="togetherArticleUpdate" class="edit-btn">수정</button>
             <button @click="cancelEdit">취소</button>
           </div>
           <div v-else class="buttons">
@@ -45,10 +48,12 @@
           <div>
             <TogetherCommentList class="my-5"/>
           </div>
-          <router-link
-            :to="{name:'TogetherCommunityView'}" class="back-btn">
-              <button style="width:100px;" class="mb-5">뒤로가기</button> 
-          </router-link>
+          <div class="back-btn">
+            <router-link
+              :to="{name:'TogetherCommunityView'}" class="back-btn">
+                <button style="width:100px;" class="mb-5">뒤로가기</button> 
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -231,5 +236,13 @@ export default {
   text-align: center;
 }
 
+.back-btn {
+  width: 100%;
+  text-align: center;
+}
 
+.together-detail-view .edit-form {
+  width: 100%;
+  margin-left: 10px;
+}
 </style>
