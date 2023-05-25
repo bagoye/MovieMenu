@@ -6,7 +6,7 @@
         v-for="(review, index) in reviews" :key="`review-${index}`"
         :review="review"
       />
-      <ReviewCreate />
+      <ReviewCreate  class="mt-3"/>
     </div>
   </div>
 </template>
@@ -38,7 +38,7 @@ export default {
   margin-top: 10px;
   width: 100%;
   background-color: #D6E7F6;
-  padding: 40px;
+  padding: 20px 40px;
   border-radius: 10px;
 }
 </style>

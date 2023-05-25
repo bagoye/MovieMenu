@@ -10,7 +10,7 @@
           
           <h1 class="mt-2">오늘의 밥 친구를 추천해드릴게요!</h1>
         </div>
-        <div>
+        <div class="mt-5">
           <button @click="toChooseView" class="btn-com1 btn-blue">오늘의 밥 친구를 추천 받을래요!</button>
           <button @click="toNormalMovieView" class="btn-com1">카테고리별 추천을 받고 싶어요!</button>
         </div>

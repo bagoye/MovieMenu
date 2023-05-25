@@ -1,22 +1,27 @@
 <template>
   <div class="review-item">
-    <div v-if="!editing" class="row">
-      <div class="col"><b>{{ review.user.username }}</b></div>
-      <div class="col">{{ review.content }}</div>
-      <div class="col">평점: {{ review.score }}</div>
-      <div class="review-item-btn col">
+    <div v-if="!editing" class="row text-center">
+      <div class="col-1"><b>{{ review.user.username }}</b></div>
+      <div class="col-7">{{ review.content }}</div>
+      <div class="col-2">평점 : {{ review.score }}</div>
+      <div class="review-item-btn col-2">
         <button @click="startEditing" class="edit-btn">수정</button>
         <button @click="deleteReview(review)" class="del-btn">삭제</button>
       </div>
+      <hr>
     </div>
-    <div v-else>
-      <form @submit.prevent="submitReview">
-        <label for="content">Content:</label>
-        <textarea @keyup.enter="submitReview" v-model="updatedReviewData.content" id="content"></textarea>
-        <label for="score">Score:</label>
-        <input v-model="updatedReviewData.score" type="number" id="score" min="0" max="5" step="0.5">
-        <button type="submit">Submit</button>
-        <button @click="cancelEditing">Cancel</button>
+
+    <div v-else class="edit-form text-center">
+      <div class="review-text">리뷰 수정하기</div>
+      <form @submit.prevent="submitReview" class="row">
+        <label for="content" class="col-1">내용</label>
+        <textarea @keyup.enter="submitReview" v-model="updatedReviewData.content" id="content" class="col-6"></textarea>
+        <label for="score" class="col-1">평점</label>
+        <input v-model="updatedReviewData.score" type="number" id="score" min="0" max="5" step="0.5" class="col-2">
+        <div class="edit-form-btn col-2">
+          <button type="submit">수정</button>
+          <button @click="cancelEditing">취소</button>
+        </div>
       </form>
     </div>
   </div>
@@ -114,9 +119,11 @@ export default {
 
 <style>
 .review-item {
+  font-size: 16px;
   width: 100%;
   height: 70px;
   line-height: 70px;
+  position: relative;
 }
 .review-item-btn button {
   width: 60px;
@@ -126,4 +133,28 @@ export default {
   border: none;
   border-radius: 5px;
 }
+
+.edit-form {
+  padding: 10px;
+  background-color: #FFFBEF;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+
+  border-radius: 10px;
+}
+
+.edit-form form * {
+  height: 44px;
+  line-height: 44px;
+}
+.edit-form form textarea input button {
+  line-height: 0;
+}
+
+.review-text {
+  font-weight: bold;
+}
+
 </style>

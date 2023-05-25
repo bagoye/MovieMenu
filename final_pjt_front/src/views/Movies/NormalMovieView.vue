@@ -54,8 +54,7 @@ export default {
 .banner-img {
   width: 100%;
   height: 100%;
-  background: url(@/assets/cats.jpg) no-repeat center center fixed;
-
+  background: url(@/assets/movie1.jpg) no-repeat center center fixed;
 }
 
 .banner-info {
