@@ -7,29 +7,42 @@
       <button class="like-btn" @click="toggleLike" :class="{ liked: isLiked }">
         {{ isLiked ? '좋아요 취소' : '좋아요' }}
       </button>
-      <p><b>평점 : </b>{{ movie?.vote_average }} 점</p>
-      <p><b>러닝 타임 : </b>{{ formatRuntime(movie?.runtime) }}</p>
-    </div>
-
-    <div>감독 : 
-      <div class="crew-img">
-        <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie?.directors[0].profile_path}`" @error="handleImageErrorDirector">
+      <div class="d-flex">
+        <p class="mx-5"><b>평점 : </b>{{ movie?.vote_average }} 점</p>
+        <p class="mx-1"><b>러닝 타임 : </b>{{ formatRuntime(movie?.runtime) }}</p>
       </div>
-      {{ movie?.directors[0].name }}
     </div>
 
+    <div class="crew d-flex row">
 
-    <p>배우:</p>
-      <div v-for="(actor, index) in movie?.actors" :key="index">
-        <div class="crew-img">
-          <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${actor.profile_path}`" @error="handleImageErrorActor">
+      <div class="director mt-5 col-sm-12 col-lg-3">
+        <span><b>감독</b></span>
+        <div class="crew-img mt-3">
+          <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie?.directors[0].profile_path}`" @error="handleImageErrorDirector">
         </div>
-        {{ actor.name }}
+        <div class="crew-name">{{ movie?.directors[0].name }}</div>
       </div>
-    <p>줄거리: {{ movie?.overview }} </p>
 
+      <div class="actor mt-5 col-sm-12 col-lg-9">
+        <span><b>배우</b></span>
+        <div class="d-flex justify-content-between mt-3 mx-1">
+          <div v-for="(actor, index) in movie?.actors" :key="index" class="actor-wrap">
+            <div class="crew-img actor-img">
+              <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${actor.profile_path}`" @error="handleImageErrorActor">
+            </div>
+            <div class="crew-name actor-name">{{ actor.name }}</div>
+          </div>
+        </div>
+      </div>
 
-    <div class="review-list">
+    </div>
+
+    <div class="overview">
+      <div><b>줄거리</b></div>
+      <div class="mt-3">{{ movie?.overview }}</div>
+    </div>
+
+    <div class="review-list my-5">
       <ReviewList />
     </div>
   </div>
@@ -151,10 +164,49 @@ iframe {
   height: 44px;
   line-height: 44px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 .detail-middle button {
   line-height: 0;
+}
+
+.crew-name {
+  margin-top: 10px;
+}
+
+.actor-wrap {
+  position: relative;
+}
+.actor-name {
+  margin-top: 5px;
+  opacity: 0;
+  width: 100px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #D6E7F6;
+  text-align: center;
+  position: absolute;
+  top: 110px;
+  transition: 0.5s;
+}
+
+.actor-name:after {
+  content : '';  
+  position: absolute;       
+  background-color:#D6E7F6;
+  width : 10px;
+  height: 10px;
+  transform: rotate(45deg) translateX(-50%);
+  top: 0;
+  left: 50%;                                  
+}
+
+.actor-wrap:hover .actor-name {
+  opacity: 1;
+}
+
+.overview {
+  margin-top: 80px;
 }
 
 </style>

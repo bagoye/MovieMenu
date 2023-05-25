@@ -158,4 +158,12 @@ body{
 hr {
   border-color: #2E8ADF;
 }
+.edit-btn {
+  background-color: #2E8ADF;
+  color: #fff;
+}
+.del-btn {
+  background-color: #df2e2e;
+  color: #fff;
+}
 </style>

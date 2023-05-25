@@ -1,11 +1,13 @@
 <template>
-  <div>
-    ReviewList
-    <ReviewListItem 
-      v-for="(review, index) in reviews" :key="`review-${index}`"
-      :review="review"
-    />
-    <ReviewCreate />
+  <div class="review-list">
+    <div><b>리뷰</b></div>
+    <div class="review-wrap">
+      <ReviewListItem 
+        v-for="(review, index) in reviews" :key="`review-${index}`"
+        :review="review"
+      />
+      <ReviewCreate />
+    </div>
   </div>
 </template>
 
@@ -32,5 +34,11 @@ export default {
 </script>
 
 <style>
-
+.review-wrap {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #D6E7F6;
+  padding: 40px;
+  border-radius: 10px;
+}
 </style>

@@ -70,6 +70,7 @@ export default {
 .menu-in {
   width: 90%;
   height: calc(100% - 50px);
+  padding-top: 25px;
   position: absolute;
   left: 5%;
   top: 50px;

@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <div v-if="!editing">
-      리뷰: {{ review.content }}
-      평점: {{ review.score }}
-      작성자: {{ review.user.username }}
-      <button @click="startEditing">Edit</button>
-      <button @click="deleteReview(review)">Delete</button>
+  <div class="review-item">
+    <div v-if="!editing" class="row">
+      <div class="col"><b>{{ review.user.username }}</b></div>
+      <div class="col">{{ review.content }}</div>
+      <div class="col">평점: {{ review.score }}</div>
+      <div class="review-item-btn col">
+        <button @click="startEditing" class="edit-btn">수정</button>
+        <button @click="deleteReview(review)" class="del-btn">삭제</button>
+      </div>
     </div>
     <div v-else>
       <form @submit.prevent="submitReview">
@@ -111,5 +113,17 @@ export default {
 </script>
 
 <style>
-/* 필요한 스타일링 작업 수행 */
+.review-item {
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+}
+.review-item-btn button {
+  width: 60px;
+  height: 36px;
+  line-height: 0;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+}
 </style>
