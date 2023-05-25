@@ -5,14 +5,19 @@
     
     <p>평점 : {{ movie?.vote_average }}</p>
     <p>러닝타임 : {{ movie?.runtime }}</p>
-    <p>감독 : 
-      <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie?.directors[0].profile_path}`" style="width: 100px;">
+    <div>감독 : 
+      <div class="crew-img">
+        <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie?.directors[0].profile_path}`" @error="handleImageErrorDirector">
+      </div>
       {{ movie?.directors[0].name }}
-    </p>
-    <!-- <p>배우 : {{ movie?.actors }}</p> -->
+    </div>
+
+
     <p>배우:</p>
       <div v-for="(actor, index) in movie?.actors" :key="index">
-        <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${actor.profile_path}`" style="width: 100px;">
+        <div class="crew-img">
+          <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${actor.profile_path}`" @error="handleImageErrorActor">
+        </div>
         {{ actor.name }}
       </div>
     <p>줄거리: {{ movie?.overview }} </p>
@@ -84,6 +89,14 @@ export default {
       const userLikes = JSON.parse(localStorage.getItem(userLikesKey)) || {};
       this.isLiked = !!userLikes[this.movie.pk];
     },
+
+    // 이미지 오류가 생겼을 때, 대체 이미지로 변경
+    handleImageErrorDirector(event) {
+      event.target.src = require('@/assets/director.png')
+    },
+    handleImageErrorActor(event) {
+      event.target.src = require('@/assets/actor.png')
+    },
   },
 }
 </script>
@@ -93,4 +106,23 @@ export default {
   color: red;
   font-weight: bold;
 }
+
+/* 동영상 테두리 둥글게 */
+iframe { 
+  border-radius: 10px;
+}
+
+.crew-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #D6E7F6;
+}
+.crew-img > img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
 </style>

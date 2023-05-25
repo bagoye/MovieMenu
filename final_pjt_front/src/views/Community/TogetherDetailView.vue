@@ -30,6 +30,10 @@
     <div>
       <TogetherCommentList/>
     </div>
+    <router-link
+      :to="{name:'TogetherCommunityView'}">
+        <button>커뮤니티로 돌아가기</button> 
+    </router-link>
   </div>
 </template>
 

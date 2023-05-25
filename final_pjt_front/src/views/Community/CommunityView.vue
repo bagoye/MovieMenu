@@ -3,18 +3,18 @@
     <div class="menu-out">
       <div class="menu-in">
 
-        <div class="category-link ">
+        <div class="category-link mt-5 mx-auto row">
           <router-link :to="{name: 'FreeCommunityView'}"
-            exact-active-class="active-link">
-            자유게시판
+            exact-active-class="active-link" class="col-6">
+            자유 게시판
           </router-link>
           <router-link :to="{name: 'TogetherCommunityView'}"
-            exact-active-class="active-link">
-            밥가취머거욥
+            exact-active-class="active-link" class="col-6">
+            영화 같이 봐요
           </router-link>    
         </div>
 
-        <router-view/>
+        <router-view class="mt-5"/>
       </div>
     </div>  
   </div>
@@ -32,12 +32,22 @@ export default {
   width: 100%;
   text-align: center;
 }
+.category-link {
+  width: 60%;
+}
 
 .category-link * {
-  margin-left: 40px;
+  text-align: center;
   font-weight: bold;
   font-size: 16px;
   color: #000;
   text-decoration: none;
+}
+.category-link *:hover {
+  color: #2E8ADF;
+}
+
+.active-link {
+  color: #2E8ADF;
 }
 </style>

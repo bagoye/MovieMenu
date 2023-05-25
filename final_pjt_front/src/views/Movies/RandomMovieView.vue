@@ -16,16 +16,16 @@
             <div>{{ pickOne.overview }}</div>
             <div>{{ pickOne.runtime }}</div>
           </div>
-          <div class="movie-btn">
           <!-- 여기서 클릭해주세요 누르고 영화 정보 나와야 이 영화로 할게요 부분 나오도록 하기 -->
-          <router-link
-            :to="{
-              name:'MovieDetailView', 
-              params: { pk: pickOne.id }}">
-                <button>
-                  이 영화로 할게요
-                </button>
-          </router-link>
+          <div class="movie-btn" v-if="pickOne">
+            <router-link
+              :to="{
+                name:'MovieDetailView', 
+                params: { pk: pickOne.id }}">
+                  <button>
+                    이 영화로 할게요
+                  </button>
+            </router-link>
             <!-- <button @click="selectMovie">이 영화로 할게요</button> -->
             <button @click="pickOneMovie">다시 뽑을래요</button>
           </div>

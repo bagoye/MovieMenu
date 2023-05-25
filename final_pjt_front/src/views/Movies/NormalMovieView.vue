@@ -5,7 +5,10 @@
       <div class="banner-trans"></div>
       <div class="banner-info">
         <div>더 많은 영화를 내 취향과 상황에 맞추고 싶다면,</div>
-        <button class="btn-com2 btn-blue mt-5">추천 받으러 가기</button>
+        <router-link
+              :to="{name:'ChooseView'}">
+          <button class="btn-com2 btn-blue mt-5">추천 받으러 가기</button>
+        </router-link>
       </div>
     </div>
 

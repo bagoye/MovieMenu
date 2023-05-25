@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="free-comment-form">
     <form @submit.prevent="submitComment">
       <textarea @keyup.enter="submitComment" v-model="commentContent" placeholder="댓글을 작성해주세요"></textarea>
       <button type="submit">작성</button>

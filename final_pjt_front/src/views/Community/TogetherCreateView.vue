@@ -1,24 +1,30 @@
 <template>
-  <div>
-    <h1>같이봐욥 게시글 작성</h1>
-    <form @submit.prevent="createArticle">
-      <label for="title">제목 : </label>
-      <input type="text" id="title" v-model.trim="title"><br>
-      <label for="content">내용 : </label>
-      <textarea id="content" cols="30" rows="10" v-model="content"></textarea><br>
-      <input type="submit" id="submit">
+  <div class="together-create row">
+    <h1>같이 봐요 게시글 작성</h1>
 
-    </form>
+    <div class="article-form col-sm-12 col-lg-6">
+      <form @submit.prevent="createArticle">
+        <label for="title">제목 : </label>
+        <input type="text" id="title" v-model.trim="title"><br>
+        <label for="content">내용 : </label>
+        <textarea id="content" cols="30" rows="10" v-model="content"></textarea><br>
+        <input type="submit" id="submit">
+      </form>
+    </div>
 
-    <form @submit.prevent="searchMovie">
-      <label for="search">영화 검색 : </label>
-      <input type="text" name="search" id="search" v-model="search">
-      <input type="submit" name="search" id="search" value="제출">
-    </form>
+    <div class="search-form col-sm-12 col-lg-6">
+      <!-- 영화 검색 폼 -->
+      <form @submit.prevent="searchMovie">
+        <label for="search">영화 검색 : </label>
+        <input type="text" name="search" id="search" v-model="search">
+        <input type="submit" name="search" id="search" value="검색">
+      </form>
+      <!-- 영화 검색 결과가 나오는 곳 -->
+      <ul>
+        <li v-for="result in searchResult" :key="result.id" @click="toResultMovie(result)">{{ result.title }}</li>
+      </ul>
+    </div>
     
-    <ul>
-      <li v-for="result in searchResult" :key="result.id" @click="toResultMovie(result)">{{ result.title }}</li>
-    </ul>
     
   </div>
 </template>
@@ -72,6 +78,9 @@ export default {
       } else if (!content){
         alert('내용 입력해주세요')
         return
+      } else if (!this.search) {
+        alert('영화를 검색하고 선택해주세요!')
+        return
       }
 
       axios({
@@ -117,5 +126,4 @@ export default {
 </script>
 
 <style>
-
 </style>

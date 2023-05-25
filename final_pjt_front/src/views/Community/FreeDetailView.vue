@@ -1,24 +1,48 @@
 <template>
-  <div>
-    <div>
-      <h1>FreeDetailView</h1>
-      <p>글 번호 : {{ article?.id }}</p>
-      <p>제목 : {{ article?.title }}</p>
-      <p>내용 : {{ article?.content }}</p>
-      <p>작성시간 : {{ article?.created_at }}</p>
-      <p>수정시간 : {{ article?.updated_at }}</p>
+  <div class="free-detail-view">
+    <div class="menu-out">
+      <div class="menu-in">
+        <div class="article-wrap">    
+          <div>
+            <div class="article-title mt-5">
+              <div class="board">자유 게시판</div>
+              <div class="article">{{ article?.title }}</div>
+              <p class="created">작성시간 : {{ article?.created_at|formatDate }}</p>
+              <p class="clear"></p>
+            </div>
+            <div class="article-content">
+              <p class="content-label">내용</p>
+              <p>{{ article?.content }}</p>
+            </div>
+          </div>
+
+          <div v-if="isEditMode" class="edit-form row">
+            <p><b>수정하기</b></p>
+            <label for="edit-title" class="col-1">제목</label>
+            <input id="edit-title" v-model="editedTitle" placeholder="수정할 제목" class="col-3" />
+            <label for="edit-content" class="col-1">내용</label>
+            <textarea id="edit-content" v-model="editedContent" placeholder="수정할 내용" class="col-7"></textarea>
+            <div>
+              <button @click="articleUpdate">수정</button>
+              <button @click="cancelEdit">취소</button>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div v-else class="buttons">
+            <button @click="toggleEditMode">수정</button>
+            <button @click="articleDelete">삭제</button>
+          </div>
+
+          <FreeCommentList class="clear my-3"/>
+
+          <router-link
+            :to="{name:'FreeCommunityView'}">
+              <button style="width:100px;">뒤로가기</button> 
+          </router-link>
+        </div>
+        </div>
     </div>
-    <div v-if="isEditMode">
-      <input v-model="editedTitle" placeholder="수정할 제목" />
-      <textarea v-model="editedContent" placeholder="수정할 내용"></textarea>
-      <button @click="articleUpdate">저장</button>
-      <button @click="cancelEdit">취소</button>
-    </div>
-    <div v-else>
-      <button @click="toggleEditMode">수정</button>
-      <button @click="articleDelete">삭제</button>
-    </div>
-    <FreeCommentList/>
   </div>
 </template>
 
@@ -127,5 +151,75 @@ export default {
       this.isEditMode = false
     },
   },
+  filters: {
+    formatDate(value) {
+      const date = new Date(value);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    },
+  },
 }
 </script>
+
+<style>
+.free-detail-view {
+  text-align: center;
+}
+
+.article-wrap {
+  width: 90%;
+  margin: 0 auto;
+}
+
+
+.article-title {
+  text-align: left;
+  margin-left: 30px;
+}
+.article-title .board {
+  font-size: 24px;
+}
+.article-title .article {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2E8ADF;
+}
+
+.article-content {
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 16px;
+}
+.content-label {
+  font-weight: bold;
+}
+
+.created {
+  float: right;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 컨텐츠 내에 있는 버튼들 */
+.article-wrap button {
+  border: none;
+  width: 70px;
+  height: 36px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.buttons {
+  float: right;
+}
+
+.edit-form {
+  width: 100%;
+  height: 150px;
+}
+</style>

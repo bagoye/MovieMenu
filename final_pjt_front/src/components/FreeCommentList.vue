@@ -1,11 +1,12 @@
 <template>
   <div>
     <div>
-      <p>FreeCommentList</p>
+      <p>댓글</p>
       <div v-for="comment in comments" :key="comment.id">
         <CommentListItem :comment="comment" @edit-comment="editComment" @delete-comment="deleteComment" />
       </div>
     </div>
+    
     <FreeCommentForm @comment-posted="refreshComments" />
   </div>
 </template>

@@ -1,11 +1,11 @@
 <template>
-  <div>
-    TogetherList
+  <div class="together-list">
+
     <TogetherListItem 
       v-for="(article, index) in articles" :key="`article-${index}`"
       :article="article"
     />
-    <!-- <ArticleListItem /> -->
+    
   </div>
 </template>
 
@@ -29,5 +29,8 @@ export default {
 </script>
 
 <style>
-
+.together-list {
+  width: 95%;
+  margin: 0 auto;
+}
 </style>

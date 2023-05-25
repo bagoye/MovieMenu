@@ -1,11 +1,11 @@
 <template>
-  <div>
-    ArticleList
+  <div class="free-list">
+
     <ArticleListItem 
       v-for="(article, index) in articles" :key="`article-${index}`"
       :article="article"
     />
-    <!-- <ArticleListItem /> -->
+
   </div>
 </template>
 
@@ -29,5 +29,8 @@ export default {
 </script>
 
 <style>
-
+.free-list {
+  width: 95%;
+  margin: 0 auto;
+}
 </style>

@@ -77,6 +77,14 @@ export default {
   font-family: "Elice Digital Baeum", sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
 body {
   background-color: #FFFBEF;
 }
@@ -140,5 +148,14 @@ body{
 .full-width {
   max-width: none;
   left: 0;
+}
+
+/* float 속성 해제 */
+.clear {
+  clear: both;
+}
+
+hr {
+  border-color: #2E8ADF;
 }
 </style>
