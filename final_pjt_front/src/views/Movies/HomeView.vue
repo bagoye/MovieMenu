@@ -62,14 +62,16 @@ export default {
 
 .menu-out {
   width: 100%;
-  min-height: calc(100vh - 150px);
+  /* min-height: calc(100vh - 150px); */
+  height: 1000px;
   background-color: #D6E7F6;
   border-radius: 20px 20px 0 0;
   position: relative;
 }
 .menu-in {
   width: 90%;
-  height: calc(100% - 50px);
+  /* height: calc(100% - 50px); */
+  height: 950px;
   padding-top: 25px;
   position: absolute;
   left: 5%;
