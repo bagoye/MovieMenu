@@ -13,12 +13,12 @@
 
           <div class="right-info col-sm-12 col-lg-7 mt-4">
             <div class="movie-info">
-              <h2>{{ pickOne.title }}</h2>
-              <div>{{ pickOne.overview }}</div>
-              <div>{{ pickOne.runtime }}</div>
+              <h2 class="pick-title">{{ pickOne.title }}</h2>
+              <div class="mt-4">{{ pickOne.overview }}</div>
             </div>
             <!-- 여기서 클릭해주세요 누르고 영화 정보 나와야 이 영화로 할게요 부분 나오도록 하기 -->
-            <div class="movie-btn" v-if="pickOne">
+            <div class="mt-3" v-if="pickOne">영화 러닝 타임 : {{ formatRuntime(pickOne.runtime) }}</div>
+            <div class="movie-btn mt-3" v-if="pickOne">
               <router-link
                 :to="{
                   name:'MovieDetailView', 
@@ -77,6 +77,11 @@ export default {
     pickOneMovie() {
       this.pickOne = _.sample(this.movies.map(movie => ({ ...movie, liked: false }))) // Reset 'liked' property
     },
+    formatRuntime(minutes) {
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      return `${hours}H ${mins}M`;
+    },
   }
 }
 
@@ -109,6 +114,27 @@ export default {
 .random-wrap {
   width: 90%;
   margin: 0 auto;
+}
+
+.pick-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2E8ADF;
+}
+
+.movie-btn {
+  width: 100%;
+}
+.movie-btn button {
+  border: none;
+  border-radius: 5px;
+  margin: 2.5%;
+  width: 45%;
+}
+
+.movie-btn button:hover {
+  background-color: #2E8ADF;
+  color: #fff;
 }
 
 </style>
