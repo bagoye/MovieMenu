@@ -17,14 +17,26 @@
             <div>{{ pickOne.runtime }}</div>
           </div>
           <div class="movie-btn">
-            <button @click="likeMovie" > <!-- Added click event and disabled attribute -->
-              {{ pickOne.liked ? '좋아요를 눌렀어요' : '이 영화로 할게요' }}
-            </button>
+          <!-- 여기서 클릭해주세요 누르고 영화 정보 나와야 이 영화로 할게요 부분 나오도록 하기 -->
+          <router-link
+            :to="{
+              name:'MovieDetailView', 
+              params: { pk: pickOne.id }}">
+                <button>
+                  이 영화로 할게요
+                </button>
+          </router-link>
+            <!-- <button @click="selectMovie">이 영화로 할게요</button> -->
             <button @click="pickOneMovie">다시 뽑을래요</button>
           </div>
           <div>
             <span>나의 취향과 상황에 맞춰 추천을 받고 싶다면?</span>
-            <button>선택하러 가기</button>
+            <router-link
+              :to="{name:'ChooseView'}">
+                <button>
+                  선택하러 가기
+                </button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -63,20 +75,6 @@ export default {
     pickOneMovie() {
       this.pickOne = _.sample(this.movies.map(movie => ({ ...movie, liked: false }))) // Reset 'liked' property
     },
-    likeMovie() {
-      if (this.pickOne.liked) {
-        this.pickOne.liked = false;
-        const userId = this.$store.state.userInfo.pk;
-        const index = this.pickOne.like_users.indexOf(userId);
-        if (index > -1) {
-          this.pickOne.like_users.splice(index, 1);
-        }
-      } else {
-        this.pickOne.liked = true;
-        const userId = this.$store.state.userInfo.pk;
-        this.pickOne.like_users.push(userId);
-      }
-    }
   }
 }
 

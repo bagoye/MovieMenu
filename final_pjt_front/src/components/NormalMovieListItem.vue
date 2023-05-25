@@ -36,8 +36,13 @@ export default {
       isLiked: false, // 버튼 상태를 저장하는 데이터 속성 추가
     };
   },
-  created() {
-    this.isLiked = this.checkIsLiked(); // 페이지 로드 시 좋아요 상태 초기화
+  mounted() {
+    this.initializeLikedStatus();
+  },
+  async created() {
+    // 페이지 로드 시 좋아요 상태 초기화
+    // checkIsLiked 메서드를 호출하여 isLiked 값을 설정
+    this.isLiked = await this.checkIsLiked();
   },
   methods: {
     formatRuntime(minutes) {
@@ -45,22 +50,25 @@ export default {
       const mins = minutes % 60;
       return `${hours}H ${mins}M`;
     },
-    toggleLike() {
+    async initializeLikedStatus() {
+      this.isLiked = await this.checkIsLiked();
+    },
+    async toggleLike() {
       const userLikesKey = `userLikes:${this.$store.state.userInfo.pk}`;
       const userLikes = JSON.parse(localStorage.getItem(userLikesKey)) || {};
 
       if (userLikes[this.movie.id]) {
         delete userLikes[this.movie.id];
-        this.isLiked = false; // 버튼 상태 변경
+        this.isLiked = false; // 버튼 상태를 false로 설정
       } else {
         userLikes[this.movie.id] = true;
-        this.isLiked = true; // 버튼 상태 변경
+        this.isLiked = true; // 버튼 상태를 true로 설정
       }
 
       localStorage.setItem(userLikesKey, JSON.stringify(userLikes));
-      this.$emit('like-updated', userLikes); // 좋아요 상태 변경을 부모 컴포넌트로 알림
+      this.$emit('like-updated', userLikes);
     },
-    checkIsLiked() {
+    async checkIsLiked() {
       const userLikesKey = `userLikes:${this.userId}`;
       const userLikes = JSON.parse(localStorage.getItem(userLikesKey)) || {};
       return !!userLikes[this.movie.id];

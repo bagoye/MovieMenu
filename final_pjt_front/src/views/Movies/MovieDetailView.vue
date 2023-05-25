@@ -41,16 +41,17 @@ export default {
       isLiked: false,
     }
   },
-  created() {
-    this.getMovieDetail()
-    
+  async created() {
+    await this.getMovieDetail();
     window.scrollTo(0, 0); // 스크롤 위치 조정
-
     this.checkIsLiked();
   },
+  // mounted() {
+  //   this.checkIsLiked();
+  // },
   methods: {
     getMovieDetail() {
-      axios({
+      return axios({
         method: 'get',
         url: `http://127.0.0.1:8000/movies/${this.$route.params.pk}/`
       })
@@ -77,7 +78,8 @@ export default {
       localStorage.setItem(userLikesKey, JSON.stringify(userLikes));
       this.$emit('like-updated', userLikes); // 좋아요 상태 변경을 부모 컴포넌트로 알림
     },
-    checkIsLiked() {
+    async checkIsLiked() {
+      await this.getMovieDetail(); // `getMovieDetail` 메소드 완료 대기
       const userLikesKey = `userLikes:${this.$store.state.userInfo.pk}`;
       const userLikes = JSON.parse(localStorage.getItem(userLikesKey)) || {};
       this.isLiked = !!userLikes[this.movie.pk];
